@@ -1,5 +1,7 @@
 import os
 from flask import Flask
+if os.path.exists("env.py"):
+    import env
 
 app = Flask(__name__)
 
@@ -13,12 +15,10 @@ app.secret_key = os.environ.get("SECRET_KEY")
 def index():
     return "<h1>Hello World!</h1>"
 
-@app.route("/user")
-def user():
-    return "<p>USER</p>"
 
 
 if __name__ == "__main__":
     app.run(
-        debug=True
+        debug=True,
+        port = int(os.environ.get("PORT"))
     )
