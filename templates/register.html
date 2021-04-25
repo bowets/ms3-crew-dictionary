@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register New Account
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row" id="register-form">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="text-center">Register an account</h2>
+                <p class="text-center">You will be able to submit new words to the dictionary</p>
+                <!-- Registration form to register a new user -->
+                <form>
+                    <!-- username field -->
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" required>
+                    </div>
+                    <!-- password -->
+                    <div class="form-group">
+                      <label for="regpassword">Password</label>
+                      <input type="password" name="regpassword" class="form-control" id="regpassword" required>
+                      <label class="mt-3" for="cregpassword">Confirm Password</label>
+                      <input type="password" class="form-control" id="cregpassword" required>
+                    </div>
+                    
+                    <button type="submit" id="register-submit" class="btn btn-primary">Submit</button>
+                  </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

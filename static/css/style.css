@@ -1,7 +1,15 @@
+
+/* Creates a margin of 10px between each word card */
 .card {
     margin-bottom: 10px;
 }
 
+/* Centers the mobile navigation links when the navigation toggle menu is activated */
 nav ul li {
     text-align: center;
+}
+
+/* Moves the register form down 20px on the register.html page */
+#register-form {
+    margin-top: 20px
 }
