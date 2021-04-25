@@ -1,3 +1,7 @@
 .card {
     margin-bottom: 10px;
 }
+
+nav ul li {
+    text-align: center;
+}
