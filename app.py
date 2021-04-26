@@ -21,7 +21,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/dictionary")
 def dictionary():
-    words = mongo.db.words.find()
+    words = mongo.db.words.find().sort("word", 1)
     return render_template("dictionary.html", words=words)
 
 
