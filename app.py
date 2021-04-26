@@ -52,7 +52,7 @@ def register():
 
         session["user"] = request.form.get("username").lower()
         flash("Registration Successfull")
-        return redirect(url_for("dictionary", username=session["user"]))
+        return redirect(url_for("dashboard", username=session["user"]))
 
     return render_template("register.html")
 
@@ -64,10 +64,11 @@ def login():
             {"user_name": request.form.get("username").lower()})
 
         if login_user:
-            if check_password_hash(login_user["user_password"], request.form.get("password")):
-                session["user"] = request.form.get("username").lower()
-                flash("Welcome {}".format(request.form.get("username")))
-                return redirect("dictionary")
+            if check_password_hash(
+                login_user["user_password"], request.form.get("password")):
+                    session["user"] = request.form.get("username").lower()
+                    flash("Welcome {}".format(request.form.get("username")))
+                    return redirect("dashboard", username=session["user"])
             else:
                 # if the password does not match
                 flash("Username and/or password are not correct")
@@ -78,6 +79,20 @@ def login():
             return redirect(url_for("login"))
         
     return render_template("login.html")
+
+
+@app.route("/dashboard/<username>", methods=["GET", "POST"])
+def dashboard(username):
+    #grab the session user and find user in database
+    username = mongo.db.users.find_one(
+        {"user_name": session["user"]})["user_name"]
+    return render_template("user_dashboard.html", username=username)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html")
+
 
 
 if __name__ == "__main__":
