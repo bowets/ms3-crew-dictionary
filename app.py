@@ -86,6 +86,7 @@ def dashboard(username):
     #grab the session user and find user in database
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
+<<<<<<< HEAD
 
     return render_template("user_dashboard.html", username=username)
 
@@ -105,6 +106,16 @@ def logout():
 #@app.errorhandler(500)
 #def internal_error(e):
 #    return render_template("500.html")
+=======
+    return render_template("user_dashboard.html", username=username)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html")
+
+
+>>>>>>> 756b535fd2bbaf7813045c0a13e51a8bb9db1a6a
 
 if __name__ == "__main__":
     app.run(
