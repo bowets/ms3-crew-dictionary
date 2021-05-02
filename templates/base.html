@@ -10,7 +10,6 @@
 
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico">
 </head>
 
 <body>
@@ -18,7 +17,7 @@
     <!-- Main navigation bar -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{url_for('dictionary')}}"><img src="/static/img/navbar_image.png" alt="cruise ship clipart" height="40px" width="40px"> Crew Dictionary</a>
+            <a class="navbar-brand" href="{{url_for('dictionary')}}">Crew Dictionary</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
