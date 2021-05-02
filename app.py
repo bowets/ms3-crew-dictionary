@@ -111,7 +111,7 @@ def submit_word():
             }
             mongo.db.words.insert_one(word)
             flash("Word added successfully. Once reviewed by the editors, it will display in the dictionary")
-            return redirect(url_for("dictionary"))
+            return redirect(url_for("dashboard", username=session["user"]))
         else:
             flash("This word already exists, please submit a new word")
             return redirect(url_for("submit_word"))
@@ -122,10 +122,26 @@ def submit_word():
 
 @app.route("/edit_word/<word_id>", methods=["GET", "POST"])
 def edit_word(word_id):
+    if request.method == "POST":
+        edit_word = {
+                "word": request.form.get("word"),
+                "word_category": request.form.get("word_category"),
+                "word_definition": request.form.get("word_definition"),
+                "word_sentence": request.form.get("word_sentence"),
+                "word_submitted_by": session["user"],
+                "word_approved_by": "",
+                "word_status": "pending_approval",
+                "word_submitted_datetime": datetime.now()
+            }
+        mongo.db.words.update({"_id": ObjectId(word_id)}, edit_word)
+        flash("Word successfully updated. The word is in the pending queue and will be reviewed by one of the editors.")
+        return redirect(url_for("dashboard", username=session["user"]))
+
     word = mongo.db.words.find_one({"_id": ObjectId(word_id)})
 
     categories = mongo.db.category.find()
     return render_template("edit_word.html", word=word, categories = categories)
+
 
 @app.route("/change_pwd", methods=["GET", "POST"])
 def change_pwd():
