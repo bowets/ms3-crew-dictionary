@@ -120,6 +120,13 @@ def submit_word():
     return render_template("submit_word.html", categories = categories)
 
 
+@app.route("/edit_word/<word_id>", methods=["GET", "POST"])
+def edit_word(word_id):
+    word = mongo.db.words.find_one({"_id": ObjectId(word_id)})
+
+    categories = mongo.db.category.find()
+    return render_template("edit_word.html", word=word, categories = categories)
+
 @app.route("/change_pwd", methods=["GET", "POST"])
 def change_pwd():
     if request.method == "POST":
