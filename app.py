@@ -143,6 +143,14 @@ def edit_word(word_id):
     return render_template("edit_word.html", word=word, categories = categories)
 
 
+@app.route("/approve/<word_id>")
+def approve(word_id):
+    word = mongo.db.words.find_one({"_id": ObjectId(word_id)})
+    mongo.db.words.update({"_id": ObjectId(word_id)}, { "$set" : {"word_approved_by": session["user"], "word_status":"approved"}})
+    flash("Approved")
+    return redirect(url_for("dashboard", username=session["user"]))
+
+
 @app.route("/change_pwd", methods=["GET", "POST"])
 def change_pwd():
     if request.method == "POST":
