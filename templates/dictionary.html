@@ -10,21 +10,24 @@ Cruise Ship Crew Dictionary
     <div class="row">
         <div class="col-12 text-center">
             <h1>Cruise Ship Crew Dictionary</h1>
-            <p>Welcome to the biggest collection of words, terms, expressions and special lingo used by ship crews from around the world!</p>
+            <p>Welcome to the biggest collection of words, terms, expressions and special lingo used by ship crews from
+                around the world!</p>
         </div>
         <div class="col-12">
 
             {% for word in words %}
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="text-capitalize">{{word.word}}</h4>
-                    <hr>
-                    <p><em><mark>{{word.word_category}}</mark></em></p>
-                    <p><span class="font-weight-bold">Definition: </span>{{word.word_definition}}</p>
-                    <p><span class="font-weight-bold">Used in a sentence: </span>{{word.word_sentence}}</p>
-                    <p class="font-weight-light font-italic">{{word.word_submitted_by}}</p>
+                {% if word.word_status == "approved" %}
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="text-capitalize">{{word.word}}</h4>
+                        <hr>
+                        <p><em><mark>{{word.word_category}}</mark></em></p>
+                        <p><span class="font-weight-bold">Definition: </span>{{word.word_definition}}</p>
+                        <p><span class="font-weight-bold">Used in a sentence: </span>{{word.word_sentence}}</p>
+                        <p class="font-weight-light font-italic">{{word.word_submitted_by}}</p>
+                    </div>
                 </div>
-            </div>
+                {% endif %}
             {% endfor %}
 
 

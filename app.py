@@ -102,7 +102,8 @@ def submit_word():
                 "word_definition": request.form.get("word_definition"),
                 "word_sentence": request.form.get("word_sentence"),
                 "word_submitted_by": session["user"],
-                "word_approved_by": ""
+                "word_approved_by": "",
+                "word_status": "pending_approval"
             }
             mongo.db.words.insert_one(word)
             flash("Word added successfully. Once reviewed by the editors, it will display in the dictionary")
