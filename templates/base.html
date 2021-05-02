@@ -9,6 +9,7 @@
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css">
+    <link rel="shortcut icon" type="image/jpg" href="/static/img/favicon.ico"/>
     <title>{% block title %}{% endblock %}</title>
 </head>
 
@@ -17,7 +18,7 @@
     <!-- Main navigation bar -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{url_for('dictionary')}}">Crew Dictionary</a>
+            <a class="navbar-brand" href="{{url_for('dictionary')}}"><img src="/static/img/cruise_ship_nav_brand.png" width="40px" height="40px" alt="cruise ship navbar brand"> Crew Dictionary</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

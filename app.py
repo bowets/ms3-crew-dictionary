@@ -68,7 +68,7 @@ def login():
                 login_user["user_password"], request.form.get("password")):
                     session["user"] = request.form.get("username").lower()
                     flash("Welcome {}".format(request.form.get("username")))
-                    return redirect("dashboard", username=session["user"])
+                    return redirect(url_for("dashboard", username=session["user"]))
             else:
                 # if the password does not match
                 flash("Username and/or password are not correct")
@@ -86,7 +86,6 @@ def dashboard(username):
     #grab the session user and find user in database
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
-<<<<<<< HEAD
 
     return render_template("user_dashboard.html", username=username)
 
@@ -99,23 +98,15 @@ def logout():
 
 
 # Error code taken from askPython https://www.askpython.com/python-modules/flask/flask-error-handling
-#@app.errorhandler(404)
-#def page_not_found(e):
-#    return render_template("404.html")
-
-#@app.errorhandler(500)
-#def internal_error(e):
-#    return render_template("500.html")
-=======
-    return render_template("user_dashboard.html", username=username)
-
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html")
 
+@app.errorhandler(500)
+def internal_error(e):
+    return render_template("500.html")
 
->>>>>>> 756b535fd2bbaf7813045c0a13e51a8bb9db1a6a
+
 
 if __name__ == "__main__":
     app.run(
