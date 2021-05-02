@@ -45,7 +45,8 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{url_for('dashboard', username=session['user'])}}">Profile Dashboard</a>
-                            <a class="dropdown-item" href="#">Submit new word</a>
+                            <a class="dropdown-item" href="{{url_for('submit_word')}}">Submit new word</a>
+                            <a class="dropdown-item" href="{{url_for('change_pwd')}}">Change Password</a>
                             <a class="dropdown-item" href="{{url_for('logout')}}">Log Out</a>
                         </div>
                     </li>

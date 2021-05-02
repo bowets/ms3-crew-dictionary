@@ -21,7 +21,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/dictionary")
 def dictionary():
-    words = mongo.db.words.find()
+    words = mongo.db.words.find().sort("word")
     return render_template("dictionary.html", words=words)
 
 
@@ -88,6 +88,43 @@ def dashboard(username):
         {"user_name": session["user"]})["user_name"]
 
     return render_template("user_dashboard.html", username=username)
+
+
+@app.route("/submit_word", methods=["GET", "POST"])
+def submit_word():
+    if request.method == "POST":
+        existing_word = mongo.db.words.find_one({"word": request.form.get("word")})
+
+        if not existing_word:
+            word = {
+                "word": request.form.get("word"),
+                "word_category": request.form.get("word_category"),
+                "word_definition": request.form.get("word_definition"),
+                "word_sentence": request.form.get("word_sentence"),
+                "word_submitted_by": session["user"],
+                "word_approved_by": ""
+            }
+            mongo.db.words.insert_one(word)
+            flash("Word added successfully. Once reviewed by the editors, it will display in the dictionary")
+            return redirect(url_for("dictionary"))
+        else:
+            flash("This word already exists, please submit a new word")
+            return redirect(url_for("submit_word"))
+
+    categories = mongo.db.category.find()
+    return render_template("submit_word.html", categories = categories)
+
+
+@app.route("/change_pwd", methods=["GET", "POST"])
+def change_pwd():
+    if request.method == "POST":
+        old_pwd = mongo.db.users.find_one({"user_name": session["user"]})["user_password"]
+        
+        if check_password_hash(old_pwd, request.form.get("old_pwd")):
+            mongo.db.users.update({"user_password": generate_password_hash(request.form.get("regpassword"))})
+            flash("new password is {}".format(mongo.db.users.find_one({"user_name" : session["user"]}["user_password"])))
+
+    return render_template("change_pwd.html")
 
 
 @app.route("/logout")

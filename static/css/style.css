@@ -14,3 +14,7 @@ nav ul li {
     margin-top: 20px
 }
 
+textarea {
+    vertical-align: top;
+    width: 100%;
+}
