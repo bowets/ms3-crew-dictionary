@@ -149,8 +149,9 @@ def change_pwd():
         old_pwd = mongo.db.users.find_one({"user_name": session["user"]})["user_password"]
         
         if check_password_hash(old_pwd, request.form.get("old_pwd")):
-            mongo.db.users.update({"user_password": generate_password_hash(request.form.get("regpassword"))})
-            flash("new password is {}".format(mongo.db.users.find_one({"user_name" : session["user"]}["user_password"])))
+            mongo.db.users.update_one({"user_name": session["user"]}, { "$set": {"user_password": generate_password_hash(request.form.get("regpassword"))} })
+            flash("Password Successfully updated")
+            return redirect(url_for("dashboard", username=session["user"]))
 
     return render_template("change_pwd.html")
 
