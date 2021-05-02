@@ -86,8 +86,9 @@ def dashboard(username):
     #grab the session user and find user in database
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
+    words = mongo.db.words.find()
 
-    return render_template("user_dashboard.html", username=username)
+    return render_template("user_dashboard.html", username=username, words=list(words))
 
 
 @app.route("/submit_word", methods=["GET", "POST"])
