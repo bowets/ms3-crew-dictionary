@@ -3,6 +3,7 @@ from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for, abort)
 from flask_pymongo import PyMongo
+from datetime import datetime
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
@@ -86,9 +87,10 @@ def dashboard(username):
     #grab the session user and find user in database
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
+    user_type = mongo.db.users.find_one({"user_name": session["user"]})["user_type"]
     words = mongo.db.words.find()
 
-    return render_template("user_dashboard.html", username=username, words=list(words))
+    return render_template("user_dashboard.html", username=username, words=list(words), user_type=user_type)
 
 
 @app.route("/submit_word", methods=["GET", "POST"])
@@ -104,7 +106,8 @@ def submit_word():
                 "word_sentence": request.form.get("word_sentence"),
                 "word_submitted_by": session["user"],
                 "word_approved_by": "",
-                "word_status": "pending_approval"
+                "word_status": "pending_approval",
+                "word_submitted_datetime": datetime.now()
             }
             mongo.db.words.insert_one(word)
             flash("Word added successfully. Once reviewed by the editors, it will display in the dictionary")
