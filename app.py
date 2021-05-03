@@ -29,6 +29,18 @@ def dictionary():
     else:
         return render_template("dictionary.html", words=words)    
 
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    search_word = request.form.get("query").lower()
+    words = mongo.db.words.find({"$text": {"$search": search_word}})
+    if session.get("user") is not None:
+        user = mongo.db.users.find_one({"user_name": session["user"]})["user_type"]
+        return render_template("dictionary.html", words=words, user_type=user)
+    else:
+        return render_template("dictionary.html", words=words) 
+
+
 @app.route("/about")
 def about():
     return render_template("about.html")

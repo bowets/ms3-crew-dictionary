@@ -13,6 +13,13 @@ Cruise Ship Crew Dictionary
             <p>Welcome to the biggest collection of words, terms, expressions and special lingo used by ship crews from
                 around the world!</p>
         </div>
+        <form class="col-12" method="POST" action="{{url_for('search')}}">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="query" id="query" placeholder="Search words and definitions" aria-label="search-box" aria-describedby="search-box">
+                <button class="btn btn-outline-secondary" type="submit" id="search">Search</button>
+                <a href="{{url_for('dictionary')}}" class="btn btn-outline-secondary">Clear</a>
+              </div>
+        </form>
         <div class="col-12">
 
             {% for word in words %}
