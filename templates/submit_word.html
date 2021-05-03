@@ -25,18 +25,22 @@ Submit a new word to the dictionary
                 </div>
                 <div class="form-group">
                     <label for="word_definition">Definition</label>
-                        <textarea class="form-control" name="word_definition" id="word_definition" rows="5" aria-describedby="word_definition"
-                            required></textarea>
-                    
+                    <textarea class="form-control" name="word_definition" id="word_definition" rows="5"
+                        aria-describedby="word_definition" required></textarea>
+
                 </div>
                 <div class="form-group">
                     <label for="word_sentence">Use the word in a sentence</label>
-                        <textarea class="form-control" name="word_sentence" id="word_sentence" rows="5" aria-describedby="word_sentence"
-                            required></textarea>
-                    
+                    <textarea class="form-control" name="word_sentence" id="word_sentence" rows="5"
+                        aria-describedby="word_sentence" required></textarea>
+
                 </div>
                 <div class="text-center">
                     <button type="submit" id="submit-word" class="btn btn-primary">Submit Word</button>
+                </div>
+                <div class="text-center">
+                    <a href="{{ url_for('dashboard', username=session['user']) }}" class="btn btn-danger mt-3">Cancel</a>
+                </div>
             </form>
         </div>
     </div>

@@ -90,10 +90,14 @@ def dashboard(username):
     #grab the session user and find user in database
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
-    user_type = mongo.db.users.find_one({"user_name": session["user"]})["user_type"]
     words = mongo.db.words.find()
+    user_type = mongo.db.users.find_one({"user_name": session["user"]})["user_type"]
+    words_active = mongo.db.words.count_documents({"word_submitted_by": session["user"], "word_status": "approved"})
+    words_pending = mongo.db.words.count_documents({"word_submitted_by": session["user"], "word_status": "pending_approval"})
+    words_to_approve = mongo.db.words.count_documents({"word_status": "pending_approval"})
+    
 
-    return render_template("user_dashboard.html", username=username, words=list(words), user_type=user_type)
+    return render_template("user_dashboard.html", username=username, words=list(words), user_type=user_type, words_active=words_active, words_pending=words_pending, words_to_approve=words_to_approve)
 
 
 @app.route("/submit_word", methods=["GET", "POST"])

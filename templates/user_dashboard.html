@@ -12,7 +12,12 @@ Cruise Ship Crew Dictionary - {{username}} dashboard
             <h2 class="text-capitalize mb-5">{{username}} Dashboard</h2>
         </div>
     </div>
-
+<div class="row">
+    <div class="col text-center mb-5">
+        <a class="btn btn-primary" href="{{url_for('submit_word')}}">Submit a word</a>
+        
+    </div>
+</div>
     <div class="accordion" id="accordionExample">
         {% if user_type == "editor" or user_type == "admin" %}
         <div class="card">
@@ -20,7 +25,7 @@ Cruise Ship Crew Dictionary - {{username}} dashboard
                 <h2 class="mb-0">
                     <button class="btn btn-block text-left" type="button" data-toggle="collapse"
                         data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        New words pending approval
+                        <h4>New words pending approval <span class="badge {% if words_to_approve == 0 %} bg-primary {% else %} bg-danger {% endif %} ">{{words_to_approve}}</span> </h4>
                     </button>
                 </h2>
             </div>
@@ -58,7 +63,7 @@ Cruise Ship Crew Dictionary - {{username}} dashboard
                 <h2 class="mb-0">
                     <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
                         data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Submitted by me
+                        <h4>Submitted by me <span class="badge bg-primary">{{words_active}}</span></h4>
                     </button>
                 </h2>
             </div>
@@ -87,7 +92,7 @@ Cruise Ship Crew Dictionary - {{username}} dashboard
                 <h2 class="mb-0">
                     <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
                         data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        My words pending approval
+                        <h4> My words pending approval <span class="badge bg-primary">{{words_pending}}</span></h4>
                     </button>
                 </h2>
             </div>
