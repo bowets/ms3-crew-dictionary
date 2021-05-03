@@ -23,8 +23,11 @@ mongo = PyMongo(app)
 @app.route("/dictionary")
 def dictionary():
     words = mongo.db.words.find().sort("word")
-    return render_template("dictionary.html", words=words)
-
+    if session.get("user") is not None:
+        user = mongo.db.users.find_one({"user_name": session["user"]})["user_type"]
+        return render_template("dictionary.html", words=words, user_type=user)
+    else:
+        return render_template("dictionary.html", words=words)    
 
 @app.route("/about")
 def about():
@@ -100,7 +103,7 @@ def submit_word():
 
         if not existing_word:
             word = {
-                "word": request.form.get("word"),
+                "word": request.form.get("word").lower(),
                 "word_category": request.form.get("word_category"),
                 "word_definition": request.form.get("word_definition"),
                 "word_sentence": request.form.get("word_sentence"),
@@ -124,7 +127,7 @@ def submit_word():
 def edit_word(word_id):
     if request.method == "POST":
         edit_word = {
-                "word": request.form.get("word"),
+                "word": request.form.get("word").lower(),
                 "word_category": request.form.get("word_category"),
                 "word_definition": request.form.get("word_definition"),
                 "word_sentence": request.form.get("word_sentence"),
@@ -149,6 +152,13 @@ def approve(word_id):
     mongo.db.words.update({"_id": ObjectId(word_id)}, { "$set" : {"word_approved_by": session["user"], "word_status":"approved"}})
     flash("Approved")
     return redirect(url_for("dashboard", username=session["user"]))
+
+
+@app.route("/delete_word/<word_id>")
+def delete_word(word_id):
+    mongo.db.words.remove({"_id": ObjectId(word_id)})
+    flash("Word successfully deleted")
+    return redirect(url_for("dictionary"))
 
 
 @app.route("/change_pwd", methods=["GET", "POST"])
