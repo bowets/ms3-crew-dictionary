@@ -26,7 +26,7 @@ Cruise Ship Crew Dictionary
                         </div>
                         <div class="col-3">
                         {% if session.get('user')%}
-                            {% if user_type == "editor" %}
+                            {% if user_type == "editor" or user_type == "admin" %}
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
                                 data-target="#delete-word{{word._id}}">
