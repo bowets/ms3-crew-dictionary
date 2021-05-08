@@ -102,7 +102,7 @@ def dictionary():
 
     ''' Dictionary home page '''
 
-    words = mongo.db.words.find().sort("word").limit(5)
+    words = mongo.db.words.find().sort("word")
 
     # If there is a session, find the user which is in the session
     # and return the home page with the user variable
@@ -116,11 +116,10 @@ def dictionary():
         return render_template("dictionary.html", words=words)    
 
 
-@app.route("/search/", methods=["GET", "POST"])
+@app.route("/search", methods=["GET", "POST"])
 def search():
 
     ''' Dictionary search function '''
-    
     find_word = request.args.get('query').lower()
     words = mongo.db.words.find({"$text": {"$search": find_word}})
     
@@ -131,6 +130,17 @@ def search():
     else:
         return render_template("dictionary.html", words=list(words), search_value = find_word) 
 
+
+@app.route("/search_user/<submitted_by>")
+def search_user(submitted_by):
+    
+    words = mongo.db.words.find({"word_submitted_by": submitted_by})
+    if is_authenticated():
+        user = mongo.db.users.find_one(
+            {"user_name": session["user"]})["user_type"]
+        return render_template("dictionary.html", words=words, user_type=user)
+    else:
+        return render_template("dictionary.html", words=list(words)) 
 
 @app.route("/about")
 def about():

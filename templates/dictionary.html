@@ -13,7 +13,7 @@ Cruise Ship Crew Dictionary
             <p>Welcome to the biggest collection of words, terms, expressions and special lingo used by ship crews from
                 around the world!</p>
         </div>
-        <form class="col-12" method="GET" action="{{url_for('search', search_word = query)}}">
+        <form class="col-12" method="GET" action="{{url_for('search')}}">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" name="query" id="query" {% if search_value !="" %}
                     value="{{search_value}}" {% endif %} placeholder="Search words and definitions"
@@ -93,7 +93,7 @@ Cruise Ship Crew Dictionary
                     <p><em><mark>{{word.word_category}}</mark></em></p>
                     <p><span class="font-weight-bold">Definition: </span>{{word.word_definition}}</p>
                     <p><span class="font-weight-bold">Used in a sentence: </span>{{word.word_sentence}}</p>
-                    <p class="font-weight-light font-italic">{{word.word_submitted_by}}</p>
+                    <p class="font-weight-light font-italic"><a href="{{url_for('search_user', submitted_by = word.word_submitted_by)}}">{{word.word_submitted_by}}</a></p>
                 </div>
             </div>
             {% endif %}
