@@ -1,6 +1,7 @@
 import os
+import math
 from flask import (
-    Flask, flash, render_template,
+    Flask, flash, render_template, 
     redirect, request, session, url_for, abort)
 from flask_pymongo import PyMongo
 from datetime import datetime
@@ -16,8 +17,84 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 
+PAGE_SIZE = 3
+KEY_PAGE_SIZE = 'page_size'
+KEY_PAGE_NUMBER = 'page_number'
+KEY_TOTAL = 'total'
+KEY_PAGE_COUNT = 'page_count'
+KEY_ENTITIES = 'items'
+KEY_NEXT = 'next_uri'
+KEY_PREV = 'prev_uri'
+KEY_SEARCH_TERM = 'search_term'
+KEY_ORDER_BY = 'order_by'
+KEY_ORDER = 'order'
+
+
+
 mongo = PyMongo(app)
 
+
+# def get_paginated_items(entity, query={}, **params):  # function
+#     page_size = int(params.get(KEY_PAGE_SIZE, PAGE_SIZE))
+#     page_number = int(params.get(KEY_PAGE_NUMBER, 1))
+#     order_by = params.get(KEY_ORDER_BY, '_id')
+#     order = params.get(KEY_ORDER, 'asc')
+#     order = pymongo.ASCENDING if order == 'asc' else pymongo.DESCENDING
+
+#     # If statement to avoid any pagination issues
+#     if page_number < 1:
+#         page_number = 1
+#     offset = (page_number - 1) * page_size
+#     items = []
+
+#     # Updated section allow user to paginate a filtered/sorted "query"
+#     search_term = params.get(KEY_SEARCH_TERM, '')
+#     if bool(query):
+#         items = entity.find(query).sort(order_by, order).skip(
+#             offset).limit(page_size)
+#     else:
+#         if search_term != '':
+#             entity.create_index([("$**", 'text')])
+#             result = entity.find({'$text': {'$search': search_term}})
+#             items = result.sort(order_by, order).skip(offset).limit(page_size)
+#         else:
+#             items = entity.find().sort(
+#                 order_by, order
+#             ).skip(offset).limit(page_size)
+
+#     total_items = items.count()
+
+#     if page_size > total_items:
+#         page_size = total_items
+#     if page_number < 1:
+#         page_number = 1
+#     if page_size:
+#         page_count = math.ceil(total_items / page_size)
+#     else:
+#         page_count = 0
+#     if page_number > page_count:
+#         page_number = page_count
+#     next_uri = {
+#         KEY_PAGE_SIZE: page_size,
+#         KEY_PAGE_NUMBER: page_number + 1
+#     } if page_number < page_count else None
+#     prev_uri = {
+#         KEY_PAGE_SIZE: page_size,
+#         KEY_PAGE_NUMBER: page_number - 1
+#     } if page_number > 1 else None
+
+#     return {
+#         KEY_TOTAL: total_items,
+#         KEY_PAGE_SIZE: page_size,
+#         KEY_PAGE_COUNT: page_count,
+#         KEY_PAGE_NUMBER: page_number,
+#         KEY_NEXT: next_uri,
+#         KEY_PREV: prev_uri,
+#         KEY_SEARCH_TERM: search_term,
+#         KEY_ORDER_BY: order_by,
+#         KEY_ORDER: order,
+#         KEY_ENTITIES: items
+#     }
 
 @app.route("/")
 @app.route("/dictionary")
@@ -25,7 +102,7 @@ def dictionary():
 
     ''' Dictionary home page '''
 
-    words = mongo.db.words.find().sort("word")
+    words = mongo.db.words.find().sort("word").limit(5)
 
     # If there is a session, find the user which is in the session
     # and return the home page with the user variable
@@ -33,20 +110,20 @@ def dictionary():
 
         user_type = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
-        
+
         return render_template("dictionary.html", words=words, user_type=user_type)
     else:
         return render_template("dictionary.html", words=words)    
 
 
-@app.route("/search", methods=["GET", "POST"])
+@app.route("/search/", methods=["GET", "POST"])
 def search():
 
     ''' Dictionary search function '''
-
-    search_word = request.form.get("query").lower()
-    words = mongo.db.words.find({"$text": {"$search": search_word}})
-    if session.get("user") is not None:
+    
+    find_word = request.args.get('query').lower()
+    words = mongo.db.words.find({"$text": {"$search": find_word}})
+    if is_authenticated():
         user = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
         return render_template("dictionary.html", words=words, user_type=user)
@@ -137,7 +214,7 @@ def dashboard():
     if not is_authenticated():
         flash("You are not logged in, you must log in first")
         return redirect(url_for("login"))
-        
+
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
     words = mongo.db.words.find()
