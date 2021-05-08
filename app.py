@@ -121,14 +121,14 @@ def search():
 
     ''' Dictionary search function '''
     find_word = request.args.get('query').lower()
-    words = mongo.db.words.find({"$text": {"$search": find_word}})
+    words = list(mongo.db.words.find({"$text": {"$search": find_word}}))
     
     if is_authenticated():
         user = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
         return render_template("dictionary.html", words=words, user_type=user, search_value = find_word)
     else:
-        return render_template("dictionary.html", words=list(words), search_value = find_word) 
+        return render_template("dictionary.html", words=words, search_value = find_word) 
 
 
 @app.route("/search_user/<submitted_by>")
