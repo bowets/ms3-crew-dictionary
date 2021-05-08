@@ -22,20 +22,33 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/dictionary")
 def dictionary():
+
+    ''' Dictionary home page '''
+
     words = mongo.db.words.find().sort("word")
-    if session.get("user") is not None:
-        user = mongo.db.users.find_one({"user_name": session["user"]})["user_type"]
-        return render_template("dictionary.html", words=words, user_type=user)
+
+    # If there is a session, find the user which is in the session
+    # and return the home page with the user variable
+    if is_authenticated():
+
+        user_type = mongo.db.users.find_one(
+            {"user_name": session["user"]})["user_type"]
+        
+        return render_template("dictionary.html", words=words, user_type=user_type)
     else:
         return render_template("dictionary.html", words=words)    
 
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
+
+    ''' Dictionary search function '''
+
     search_word = request.form.get("query").lower()
     words = mongo.db.words.find({"$text": {"$search": search_word}})
     if session.get("user") is not None:
-        user = mongo.db.users.find_one({"user_name": session["user"]})["user_type"]
+        user = mongo.db.users.find_one(
+            {"user_name": session["user"]})["user_type"]
         return render_template("dictionary.html", words=words, user_type=user)
     else:
         return render_template("dictionary.html", words=words) 
@@ -43,11 +56,20 @@ def search():
 
 @app.route("/about")
 def about():
+    '''About dictionary'''
+
     return render_template("about.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    '''Register new user'''
+
+    # Reference for this code is above function definition below
+    if is_authenticated():
+        flash("Please log out first before registering a new user")
+        return redirect(url_for("dashboard"))
+
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
             {"user_name": request.form.get("username").lower()})
@@ -75,6 +97,14 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    '''Log in existing user'''
+
+    #check if another user is already logged in
+    if is_authenticated():
+        flash("You must log out first before logging back in")
+        return redirect(url_for("login"))
+
+    #if no users logged in, log in user
     if request.method == "POST":
         login_user = mongo.db.users.find_one(
             {"user_name": request.form.get("username").lower()})
@@ -90,6 +120,7 @@ def login():
                 flash("Username and/or password are not correct")
                 return redirect(url_for("login"))
 
+        #if username does not match
         else:
             flash("Username and/or password are not correct")
             return redirect(url_for("login"))
@@ -97,9 +128,16 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/dashboard/<username>", methods=["GET", "POST"])
-def dashboard(username):
+@app.route("/dashboard", methods=["GET", "POST"])
+def dashboard():
     #grab the session user and find user in database
+    #import pdb; pdb.set_trace()
+
+    #check if user is in session, if not redirect to login page
+    if not is_authenticated():
+        flash("You are not logged in, you must log in first")
+        return redirect(url_for("login"))
+        
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
     words = mongo.db.words.find()
@@ -193,7 +231,7 @@ def change_pwd():
 @app.route("/logout")
 def logout():
     flash("You have been logged out")
-    session.pop("user")
+    session.pop("user", None)
     return redirect(url_for("dictionary"))
 
 
@@ -205,6 +243,15 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_error(e):
     return render_template("500.html")
+
+
+# Code taken from previous student project "ai-chat-annotator" by "NgiapPuoyKoh" from https://github.com/NgiapPuoyKoh/ai-chat-annotator/blob/7b37842579f8d1783de8d11be544f9790b248f05/app.py
+
+def is_authenticated():
+    ''' Is there a user in the session '''
+
+    return 'user' in session
+
 
 
 
