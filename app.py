@@ -123,12 +123,13 @@ def search():
     
     find_word = request.args.get('query').lower()
     words = mongo.db.words.find({"$text": {"$search": find_word}})
+    
     if is_authenticated():
         user = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
         return render_template("dictionary.html", words=words, user_type=user, search_value = find_word)
     else:
-        return render_template("dictionary.html", words=words, search_value = find_word) 
+        return render_template("dictionary.html", words=list(words), search_value = find_word) 
 
 
 @app.route("/about")
@@ -229,6 +230,10 @@ def dashboard():
 
 @app.route("/submit_word", methods=["GET", "POST"])
 def submit_word():
+    if not is_authenticated():
+        flash("Please log in or register to submit a new word")
+        return redirect(url_for('login'))
+
     if request.method == "POST":
         existing_word = mongo.db.words.find_one({"word": request.form.get("word")})
 

@@ -15,14 +15,27 @@ Cruise Ship Crew Dictionary
         </div>
         <form class="col-12" method="GET" action="{{url_for('search', search_word = query)}}">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" name="query" id="query" {% if search_value != "" %} value="{{search_value}}" {% endif %} placeholder="Search words and definitions" aria-label="search-box" aria-describedby="search-box">
+                <input type="text" class="form-control" name="query" id="query" {% if search_value !="" %}
+                    value="{{search_value}}" {% endif %} placeholder="Search words and definitions"
+                    aria-label="search-box" aria-describedby="search-box">
                 <button class="btn btn-outline-secondary" type="submit" id="search">Search</button>
                 <a href="{{url_for('dictionary')}}" class="btn btn-outline-secondary">Clear</a>
-              </div>
+            </div>
         </form>
         <div class="col-12">
 
+            {% if not words %}
+            <div class="row">
+                <div class="col text-center">
+                    <h2>There are no records for this word</h2>
+                    <p>Would you like to add this word to the dictionary?</p>
+                    <a href="{{url_for('submit_word')}}" class="btn btn-primary mb-4">Add <strong>{{search_value}}</strong> to dictionary</a>
+                </div>
+            </div>
+            {% endif %}
+
             {% for word in words %}
+
             {% if word.word_status == "approved" %}
             <div class="card">
 
@@ -85,23 +98,23 @@ Cruise Ship Crew Dictionary
             </div>
             {% endif %}
             {% endfor %}
-<div class="row">
-    <div class="col">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
-    </div>
-</div>
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
 
         </div>
     </div>
