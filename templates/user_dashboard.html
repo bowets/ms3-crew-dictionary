@@ -79,7 +79,6 @@ Cruise Ship Crew Dictionary - {{username}} dashboard
                     <p><em><mark>{{word.word_category}}</mark></em></p>
                     <p><span class="font-weight-bold">Definition: </span>{{word.word_definition}}</p>
                     <p><span class="font-weight-bold">Used in a sentence: </span>{{word.word_sentence}}</p>
-                    <p class="font-weight-light font-italic">{{word.word_submitted_by}}</p>
                 </div>
 
                 {% endif %}
@@ -107,7 +106,6 @@ Cruise Ship Crew Dictionary - {{username}} dashboard
                     <p><em><mark>{{word.word_category}}</mark></em></p>
                     <p><span class="font-weight-bold">Definition: </span>{{word.word_definition}}</p>
                     <p><span class="font-weight-bold">Used in a sentence: </span>{{word.word_sentence}}</p>
-                    <p class="font-weight-light font-italic">{{word.word_submitted_by}}</p>
                     <div class="row">
                         <div class="col-6">
                             <a href="{{url_for('edit_word', word_id=word._id)}}" class="btn btn-sm btn-primary">Edit
