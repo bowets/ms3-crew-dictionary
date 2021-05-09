@@ -119,9 +119,9 @@ def search_user(submitted_by):
     if is_authenticated():
         user = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
-        return render_template("dictionary.html", words=words, user_type=user)
+        return render_template("search.html", words=words, user_type=user)
     else:
-        return render_template("dictionary.html", words=list(words)) 
+        return render_template("search.html", words=list(words)) 
 
 @app.route("/about")
 def about():
