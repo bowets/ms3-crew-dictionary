@@ -1,11 +1,15 @@
 import os
 import math
+import pymongo
 from flask import (
     Flask, flash, render_template, 
     redirect, request, session, url_for, abort)
 from flask_pymongo import PyMongo
 from datetime import datetime
 from bson.objectid import ObjectId
+from bson import json_util
+from bson.json_util import dumps
+from bson.errors import InvalidId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
@@ -17,7 +21,7 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 
-PAGE_SIZE = 3
+PAGE_SIZE = 5
 KEY_PAGE_SIZE = 'page_size'
 KEY_PAGE_NUMBER = 'page_number'
 KEY_TOTAL = 'total'
@@ -25,95 +29,102 @@ KEY_PAGE_COUNT = 'page_count'
 KEY_ENTITIES = 'items'
 KEY_NEXT = 'next_uri'
 KEY_PREV = 'prev_uri'
-KEY_SEARCH_TERM = 'search_term'
-KEY_ORDER_BY = 'order_by'
-KEY_ORDER = 'order'
+# KEY_SEARCH_TERM = 'search_term'
+# KEY_ORDER_BY = 'order_by'
+# KEY_ORDER = 'order'
 
 
 
 mongo = PyMongo(app)
 
 
-# def get_paginated_items(entity, query={}, **params):  # function
-#     page_size = int(params.get(KEY_PAGE_SIZE, PAGE_SIZE))
-#     page_number = int(params.get(KEY_PAGE_NUMBER, 1))
-#     order_by = params.get(KEY_ORDER_BY, '_id')
-#     order = params.get(KEY_ORDER, 'asc')
-#     order = pymongo.ASCENDING if order == 'asc' else pymongo.DESCENDING
+def get_paginated_items(entity, **params):  # function
+    page_size = int(params.get(KEY_PAGE_SIZE, PAGE_SIZE))
+    page_number = int(params.get(KEY_PAGE_NUMBER, 1))
+    # order_by = params.get(KEY_ORDER_BY, 'word')
+    # order = params.get(KEY_ORDER, 'asc')
+    # order = pymongo.ASCENDING if order == 'asc' else pymongo.DESCENDING
 
-#     # If statement to avoid any pagination issues
-#     if page_number < 1:
-#         page_number = 1
-#     offset = (page_number - 1) * page_size
-#     items = []
+    # If statement to avoid any pagination issues
+    if page_number < 1:
+        page_number = 1
+    offset = (page_number - 1) * page_size
+    items = []
 
-#     # Updated section allow user to paginate a filtered/sorted "query"
-#     search_term = params.get(KEY_SEARCH_TERM, '')
-#     if bool(query):
-#         items = entity.find(query).sort(order_by, order).skip(
-#             offset).limit(page_size)
-#     else:
-#         if search_term != '':
-#             entity.create_index([("$**", 'text')])
-#             result = entity.find({'$text': {'$search': search_term}})
-#             items = result.sort(order_by, order).skip(offset).limit(page_size)
-#         else:
-#             items = entity.find().sort(
-#                 order_by, order
-#             ).skip(offset).limit(page_size)
+    # Updated section allow user to paginate a filtered/sorted "query"
+    # search_term = params.get(KEY_SEARCH_TERM, '')
+    # if bool(query):
+    #     items = entity.find(query).sort(order_by, order).skip(
+    #         offset).limit(page_size)
+    # else:
+        # if search_term != '':
+        #     entity.create_index([("$**", 'text')])
+        #     result = entity.find({'$text': {'$search': search_term}})
+        #     items = result.sort(order_by, order).skip(offset).limit(page_size)
+        # else:
+    items = entity.find().sort("word").skip(offset).limit(page_size)
+    
+    total_items = items.count()
 
-#     total_items = items.count()
+    if page_size > total_items:
+        page_size = total_items
+    if page_number < 1:
+        page_number = 1
+    if page_size:
+        page_count = math.ceil(total_items / page_size)
+    else:
+        page_count = 0
+    if page_number > page_count:
+        page_number = page_count
+    next_uri = {
+        KEY_PAGE_SIZE: page_size,
+        KEY_PAGE_NUMBER: page_number + 1
+    } if page_number < page_count else None
+    prev_uri = {
+        KEY_PAGE_SIZE: page_size,
+        KEY_PAGE_NUMBER: page_number - 1
+    } if page_number > 1 else None
 
-#     if page_size > total_items:
-#         page_size = total_items
-#     if page_number < 1:
-#         page_number = 1
-#     if page_size:
-#         page_count = math.ceil(total_items / page_size)
-#     else:
-#         page_count = 0
-#     if page_number > page_count:
-#         page_number = page_count
-#     next_uri = {
-#         KEY_PAGE_SIZE: page_size,
-#         KEY_PAGE_NUMBER: page_number + 1
-#     } if page_number < page_count else None
-#     prev_uri = {
-#         KEY_PAGE_SIZE: page_size,
-#         KEY_PAGE_NUMBER: page_number - 1
-#     } if page_number > 1 else None
-
-#     return {
-#         KEY_TOTAL: total_items,
-#         KEY_PAGE_SIZE: page_size,
-#         KEY_PAGE_COUNT: page_count,
-#         KEY_PAGE_NUMBER: page_number,
-#         KEY_NEXT: next_uri,
-#         KEY_PREV: prev_uri,
-#         KEY_SEARCH_TERM: search_term,
-#         KEY_ORDER_BY: order_by,
-#         KEY_ORDER: order,
-#         KEY_ENTITIES: items
-#     }
+    return {
+        KEY_TOTAL: total_items,
+        KEY_PAGE_SIZE: page_size,
+        KEY_PAGE_COUNT: page_count,
+        KEY_PAGE_NUMBER: page_number,
+        KEY_NEXT: next_uri,
+        KEY_PREV: prev_uri,
+        # KEY_SEARCH_TERM: search_term,
+        # KEY_ORDER_BY: order_by,
+        # KEY_ORDER: order,
+        KEY_ENTITIES: items
+    }
 
 @app.route("/")
-@app.route("/dictionary")
+@app.route("/dictionary", methods=['GET', 'POST'])
 def dictionary():
 
     ''' Dictionary home page '''
+    # import pdb; pdb.set_trace()
+    # words = mongo.db.words.find().sort("word")
+    if request.method == 'GET':
+        params = request.args.to_dict()  
+    # else:
+    #     params = request.form.to_dict()
+        # print(params)
+    paginated_words = get_paginated_items(mongo.db.words, **params)
+    print(paginated_words)
+    return render_template('dictionary.html', words=paginated_words)
 
-    words = mongo.db.words.find().sort("word")
 
     # If there is a session, find the user which is in the session
     # and return the home page with the user variable
-    if is_authenticated():
+    # if is_authenticated():
 
-        user_type = mongo.db.users.find_one(
-            {"user_name": session["user"]})["user_type"]
+    #     user_type = mongo.db.users.find_one(
+    #         {"user_name": session["user"]})["user_type"]
 
-        return render_template("dictionary.html", words=words, user_type=user_type)
-    else:
-        return render_template("dictionary.html", words=words)    
+    #     return render_template("dictionary.html", words=words, user_type=user_type)
+    # else:
+    #     return render_template("dictionary.html", words=words)    
 
 
 @app.route("/search", methods=["GET", "POST"])
