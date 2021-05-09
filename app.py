@@ -224,6 +224,8 @@ def submit_word():
     if not is_authenticated():
         flash("Please log in or register to submit a new word")
         return redirect(url_for('login'))
+    if request.method == "GET":
+        new_word_value = request.args.get('new_word').lower()
 
     if request.method == "POST":
         existing_word = mongo.db.words.find_one({"word": request.form.get("word").lower()})
@@ -247,7 +249,7 @@ def submit_word():
             return redirect(url_for("submit_word"))
 
     categories = mongo.db.category.find()
-    return render_template("submit_word.html", categories = categories)
+    return render_template("submit_word.html", categories = categories, new_word=new_word_value)
 
 
 @app.route("/edit_word/<word_id>", methods=["GET", "POST"])

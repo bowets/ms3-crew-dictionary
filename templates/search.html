@@ -37,11 +37,11 @@ Cruise Ship Crew Dictionary
                 <div class="col text-center">
                     <h2>There are no records for this word</h2>
                     <p>Would you like to add this word to the dictionary?</p>
-                    <a href="{{url_for('submit_word')}}" class="btn btn-primary mb-4">Add <strong>{{search_value}}</strong> to dictionary</a>
+                    <a href="{{url_for('submit_word', new_word=search_value)}}" class="btn btn-primary mb-4">Add <strong>{{search_value}}</strong> to dictionary</a>
                 </div>
             </div>
             {% endif %}
-            
+
             {% for word in words %}
             
             {% if word.word_status == "approved" %}
@@ -102,6 +102,14 @@ Cruise Ship Crew Dictionary
                     <p><span class="font-weight-bold">Definition: </span>{{word.word_definition}}</p>
                     <p><span class="font-weight-bold">Used in a sentence: </span>{{word.word_sentence}}</p>
                     <p class="font-weight-light font-italic"><a href="{{url_for('search_user', submitted_by = word.word_submitted_by)}}">{{word.word_submitted_by}}</a></p>
+                </div>
+            </div>
+            {% elif word.word_status == "pending_approval" %}
+            <div class="row">
+                <div class="col text-center">
+                    <h2>This word is pending approval. Please check back soon.</h2>
+                    <p>If you would like to add a new word to the dictionary, please click below.</p>
+                    <a href="{{url_for('submit_word')}}" class="btn btn-primary mb-4">Add new word to dictionary</a>
                 </div>
             </div>
             {% endif %}
