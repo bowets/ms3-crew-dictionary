@@ -87,7 +87,6 @@ def dictionary():
         params = request.args.to_dict()  
 
     paginated_words = get_paginated_items(mongo.db.words, **params)
-    print(paginated_words)
     if is_authenticated():
         user_type = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
@@ -323,9 +322,7 @@ def admin_panel():
             "user_name" : request.form.get("user_id"),
             "user_type" : request.form.get("user_type")
         }
-        print(user_type_change)
         current_type = mongo.db.users.find_one({"user_name": request.form.get("user_id")})['user_type']
-        print(current_type)
         if user_type_change['user_type'] == current_type:
             flash("This user is already {}".format(current_type))
             return redirect(url_for("admin_panel"))
