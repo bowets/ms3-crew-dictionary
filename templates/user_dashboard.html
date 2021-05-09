@@ -15,7 +15,9 @@ Cruise Ship Crew Dictionary - {{username}} dashboard
 <div class="row">
     <div class="col text-center mb-5">
         <a class="btn btn-primary" href="{{url_for('submit_word')}}">Submit a word</a>
-        
+        {% if user_type == "admin" %}
+        <a class="btn btn-primary" href="{{url_for('admin_panel')}}">Manage editors</a>
+        {% endif %}
     </div>
 </div>
     <div class="accordion" id="accordionExample">

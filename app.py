@@ -167,12 +167,12 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     '''Log in existing user'''
-
+    
     #check if another user is already logged in
     if is_authenticated():
         flash("You must log out first before logging back in")
         return redirect(url_for("login"))
-
+    
     #if no users logged in, log in user
     if request.method == "POST":
         login_user = mongo.db.users.find_one(
@@ -193,7 +193,7 @@ def login():
         else:
             flash("Username and/or password are not correct")
             return redirect(url_for("login"))
-        
+
     return render_template("login.html")
 
 
@@ -299,8 +299,40 @@ def change_pwd():
             mongo.db.users.update_one({"user_name": session["user"]}, { "$set": {"user_password": generate_password_hash(request.form.get("regpassword"))} })
             flash("Password Successfully updated")
             return redirect(url_for("dashboard", username=session["user"]))
+        else:
+            flash("Old Password is incorrect, please try again")
+            return redirect(url_for("change_pwd"))
 
     return render_template("change_pwd.html")
+
+
+@app.route("/admin_panel", methods = ["GET", "POST"])
+def admin_panel():
+
+    if not is_authenticated():
+        flash("You do not have permission to enter this area. Please log in.")
+        return redirect(url_for("login"))
+
+    users = mongo.db.users.find()
+
+    if request.method == "POST":
+        user_type_change = {
+            "user_name" : request.form.get("user_id"),
+            "user_type" : request.form.get("user_type")
+        }
+        print(user_type_change)
+        current_type = mongo.db.users.find_one({"user_name": request.form.get("user_id")})['user_type']
+        print(current_type)
+        if user_type_change['user_type'] == current_type:
+            flash("This user is already {}".format(current_type))
+            return redirect(url_for("admin_panel"))
+        else:
+            mongo.db.users.update_one({"user_name": user_type_change['user_name']}, {"$set": {"user_type": user_type_change['user_type']}})
+            flash(f"{user_type_change['user_name']} successfully changed to {user_type_change['user_type']}")
+            return redirect(url_for("dashboard"))
+    
+
+    return render_template("admin_panel.html", users = users)    
 
 
 @app.route("/logout")
@@ -327,8 +359,12 @@ def is_authenticated():
 
     return 'user' in session
 
-
-
+def is_admin():
+    user_type = mongo.db.users.find({"user_name": session['user']})['user_type']
+    if user_type == "admin":
+        return True
+    else:
+        return False
 
 if __name__ == "__main__":
     app.run(
