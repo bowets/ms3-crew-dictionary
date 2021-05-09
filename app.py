@@ -224,8 +224,11 @@ def submit_word():
     if not is_authenticated():
         flash("Please log in or register to submit a new word")
         return redirect(url_for('login'))
+
     if request.method == "GET":
-        new_word_value = request.args.get('new_word').lower()
+        new_word_value = request.args.get('new_word')
+        if new_word_value is not None:
+            new_word_value = new_word_value.lower()
 
     if request.method == "POST":
         existing_word = mongo.db.words.find_one({"word": request.form.get("word").lower()})
