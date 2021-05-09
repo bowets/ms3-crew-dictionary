@@ -31,13 +31,6 @@ Cruise Ship Crew Dictionary
         </form>
         <div class="col-12">
 
-            <!-- Top pagination component -->
-            <div class="row">
-                <div class="col">
-                    {{ components.pagination(url_for('dictionary'), words) }}
-                </div>
-            </div>
-
             <!-- If no words returned in the search -->
             {% if not words %}
             <div class="row">
@@ -49,7 +42,7 @@ Cruise Ship Crew Dictionary
             </div>
             {% endif %}
             
-            {% for word in words['items'] %}
+            {% for word in words %}
             
             {% if word.word_status == "approved" %}
             <div class="card">
@@ -113,11 +106,7 @@ Cruise Ship Crew Dictionary
             </div>
             {% endif %}
             {% endfor %}
-            <div class="row">
-                <div class="col">
-                    {{ components.pagination(url_for('dictionary'), words) }}
-                </div>
-            </div>
+            
 
         </div>
     </div>

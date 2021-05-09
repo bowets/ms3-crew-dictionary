@@ -110,9 +110,14 @@ def dictionary():
     # else:
     #     params = request.form.to_dict()
         # print(params)
+
     paginated_words = get_paginated_items(mongo.db.words, **params)
-    print(paginated_words)
-    return render_template('dictionary.html', words=paginated_words)
+    if is_authenticated():
+        user_type = mongo.db.users.find_one(
+            {"user_name": session["user"]})["user_type"]
+        return render_template('dictionary.html', words=paginated_words, user_type=user_type)
+    else:
+        return render_template('dictionary.html', words=paginated_words)
 
 
     # If there is a session, find the user which is in the session
@@ -131,15 +136,16 @@ def dictionary():
 def search():
 
     ''' Dictionary search function '''
+
     find_word = request.args.get('query').lower()
     words = list(mongo.db.words.find({"$text": {"$search": find_word}}))
     
     if is_authenticated():
         user = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
-        return render_template("dictionary.html", words=words, user_type=user, search_value = find_word)
+        return render_template("search.html", words=words, user_type=user, search_value = find_word)
     else:
-        return render_template("dictionary.html", words=words, search_value = find_word) 
+        return render_template("search.html", words=words, search_value = find_word) 
 
 
 @app.route("/search_user/<submitted_by>")
