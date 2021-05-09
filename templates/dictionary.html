@@ -24,7 +24,7 @@ Cruise Ship Crew Dictionary
             <div class="input-group mb-3">
                 <input type="text" class="form-control" name="query" id="query" {% if search_value !="" %}
                     value="{{search_value}}" {% endif %} placeholder="Search words and definitions"
-                    aria-label="search-box" aria-describedby="search-box">
+                    aria-label="query" aria-describedby="search-box">
                 <button class="btn btn-outline-secondary" type="submit" id="search">Search</button>
                 <a href="{{url_for('dictionary')}}" class="btn btn-outline-secondary">Clear</a>
             </div>

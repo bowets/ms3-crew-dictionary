@@ -29,21 +29,15 @@ KEY_PAGE_COUNT = 'page_count'
 KEY_ENTITIES = 'items'
 KEY_NEXT = 'next_uri'
 KEY_PREV = 'prev_uri'
-# KEY_SEARCH_TERM = 'search_term'
-# KEY_ORDER_BY = 'order_by'
-# KEY_ORDER = 'order'
-
 
 
 mongo = PyMongo(app)
 
-
+#pagination function taken from project by 
 def get_paginated_items(entity, **params):  # function
     page_size = int(params.get(KEY_PAGE_SIZE, PAGE_SIZE))
     page_number = int(params.get(KEY_PAGE_NUMBER, 1))
-    # order_by = params.get(KEY_ORDER_BY, 'word')
-    # order = params.get(KEY_ORDER, 'asc')
-    # order = pymongo.ASCENDING if order == 'asc' else pymongo.DESCENDING
+
 
     # If statement to avoid any pagination issues
     if page_number < 1:
@@ -51,17 +45,6 @@ def get_paginated_items(entity, **params):  # function
     offset = (page_number - 1) * page_size
     items = []
 
-    # Updated section allow user to paginate a filtered/sorted "query"
-    # search_term = params.get(KEY_SEARCH_TERM, '')
-    # if bool(query):
-    #     items = entity.find(query).sort(order_by, order).skip(
-    #         offset).limit(page_size)
-    # else:
-        # if search_term != '':
-        #     entity.create_index([("$**", 'text')])
-        #     result = entity.find({'$text': {'$search': search_term}})
-        #     items = result.sort(order_by, order).skip(offset).limit(page_size)
-        # else:
     items = entity.find().sort("word").skip(offset).limit(page_size)
     
     total_items = items.count()
@@ -92,9 +75,6 @@ def get_paginated_items(entity, **params):  # function
         KEY_PAGE_NUMBER: page_number,
         KEY_NEXT: next_uri,
         KEY_PREV: prev_uri,
-        # KEY_SEARCH_TERM: search_term,
-        # KEY_ORDER_BY: order_by,
-        # KEY_ORDER: order,
         KEY_ENTITIES: items
     }
 
@@ -103,13 +83,8 @@ def get_paginated_items(entity, **params):  # function
 def dictionary():
 
     ''' Dictionary home page '''
-    # import pdb; pdb.set_trace()
-    # words = mongo.db.words.find().sort("word")
     if request.method == 'GET':
         params = request.args.to_dict()  
-    # else:
-    #     params = request.form.to_dict()
-        # print(params)
 
     paginated_words = get_paginated_items(mongo.db.words, **params)
     if is_authenticated():
@@ -118,18 +93,6 @@ def dictionary():
         return render_template('dictionary.html', words=paginated_words, user_type=user_type)
     else:
         return render_template('dictionary.html', words=paginated_words)
-
-
-    # If there is a session, find the user which is in the session
-    # and return the home page with the user variable
-    # if is_authenticated():
-
-    #     user_type = mongo.db.users.find_one(
-    #         {"user_name": session["user"]})["user_type"]
-
-    #     return render_template("dictionary.html", words=words, user_type=user_type)
-    # else:
-    #     return render_template("dictionary.html", words=words)    
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -262,7 +225,7 @@ def submit_word():
         return redirect(url_for('login'))
 
     if request.method == "POST":
-        existing_word = mongo.db.words.find_one({"word": request.form.get("word")})
+        existing_word = mongo.db.words.find_one({"word": request.form.get("word").lower()})
 
         if not existing_word:
             word = {
