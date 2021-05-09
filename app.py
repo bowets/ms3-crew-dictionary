@@ -87,6 +87,7 @@ def dictionary():
         params = request.args.to_dict()  
 
     paginated_words = get_paginated_items(mongo.db.words, **params)
+    print(paginated_words)
     if is_authenticated():
         user_type = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
