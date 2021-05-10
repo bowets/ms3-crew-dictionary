@@ -395,6 +395,11 @@ def logout():
     return redirect(url_for("dictionary"))
 
 
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+
 # Error code taken from askPython
 # https://www.askpython.com/python-modules/flask/flask-error-handling
 

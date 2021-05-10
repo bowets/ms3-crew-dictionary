@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contact Developer
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row" id="register-form">
+    <div class="col-md-6 offset-md-3">
+      <h2 class="text-center">Contact the developer</h2>
+      <p class="text-center">Please complete the form below to contact the developer</p>
+      <!-- Registration form to register a new user -->
+      <form method="#" action="#">
+        <!-- email field -->
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" class="form-control" name="email" id="email" aria-describedby="username"
+            minlength="5" required>
+        </div>
+        <!-- First Name -->
+        <div class="form-group">
+          <label for="fname">First Name</label>
+          <input type="text" name="fname" class="form-control" id="fname" required>
+          <label class="mt-3" for="lname">Last Name</label>
+          <input type="text" class="form-control" id="lname" required>
+          <div class="form-group mt-3">
+            <label for="comment">Comment</label>
+          <textarea class="form-control" name="comment" id="comment" cols="30" rows="10" required></textarea>
+        </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" id="register-submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
