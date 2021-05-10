@@ -2,7 +2,7 @@ import os
 import math
 import pymongo
 from flask import (
-    Flask, flash, render_template, 
+    Flask, flash, render_template,
     redirect, request, session, url_for, abort)
 from flask_pymongo import PyMongo
 from datetime import datetime
@@ -33,11 +33,12 @@ KEY_PREV = 'prev_uri'
 
 mongo = PyMongo(app)
 
-#pagination function taken from project by 
+# pagination function taken from project by
+
+
 def get_paginated_items(entity, **params):  # function
     page_size = int(params.get(KEY_PAGE_SIZE, PAGE_SIZE))
     page_number = int(params.get(KEY_PAGE_NUMBER, 1))
-
 
     # If statement to avoid any pagination issues
     if page_number < 1:
@@ -46,7 +47,7 @@ def get_paginated_items(entity, **params):  # function
     items = []
 
     items = entity.find().sort("word").skip(offset).limit(page_size)
-    
+
     total_items = items.count()
 
     if page_size > total_items:
@@ -78,19 +79,21 @@ def get_paginated_items(entity, **params):  # function
         KEY_ENTITIES: items
     }
 
+
 @app.route("/")
 @app.route("/dictionary", methods=['GET', 'POST'])
 def dictionary():
 
     ''' Dictionary home page '''
     if request.method == 'GET':
-        params = request.args.to_dict()  
+        params = request.args.to_dict()
 
     paginated_words = get_paginated_items(mongo.db.words, **params)
     if is_authenticated():
         user_type = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
-        return render_template('dictionary.html', words=paginated_words, user_type=user_type)
+        return render_template(
+            'dictionary.html', words=paginated_words, user_type=user_type)
     else:
         return render_template('dictionary.html', words=paginated_words)
 
@@ -102,25 +105,33 @@ def search():
 
     find_word = request.args.get('query').lower()
     words = list(mongo.db.words.find({"$text": {"$search": find_word}}))
-    
+
     if is_authenticated():
         user = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
-        return render_template("search.html", words=words, user_type=user, search_value = find_word)
+        return render_template(
+            "search.html",
+            words=words,
+            user_type=user,
+            search_value=find_word)
     else:
-        return render_template("search.html", words=words, search_value = find_word) 
+        return render_template(
+            "search.html",
+            words=words,
+            search_value=find_word)
 
 
 @app.route("/search_user/<submitted_by>")
 def search_user(submitted_by):
-    
+
     words = mongo.db.words.find({"word_submitted_by": submitted_by})
     if is_authenticated():
         user = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
         return render_template("search.html", words=words, user_type=user)
     else:
-        return render_template("search.html", words=list(words)) 
+        return render_template("search.html", words=list(words))
+
 
 @app.route("/about")
 def about():
@@ -143,12 +154,14 @@ def register():
             {"user_name": request.form.get("username").lower()})
 
         if existing_user:
-            flash("Username already exists. Please select a different username.")
+            flash(
+                "Username already exists. Please select a different username.")
             return redirect(url_for("register"))
 
         register = {
             "user_name": request.form.get("username").lower(),
-            "user_password": generate_password_hash(request.form.get("regpassword")),
+            "user_password": generate_password_hash(
+                request.form.get("regpassword")),
             "user_type": "user"
         }
 
@@ -166,29 +179,31 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     '''Log in existing user'''
-    
-    #check if another user is already logged in
+
+    # check if another user is already logged in
     if is_authenticated():
         flash("You must log out first before logging back in")
         return redirect(url_for("login"))
-    
-    #if no users logged in, log in user
+
+    # if no users logged in, log in user
     if request.method == "POST":
         login_user = mongo.db.users.find_one(
             {"user_name": request.form.get("username").lower()})
 
         if login_user:
             if check_password_hash(
-                login_user["user_password"], request.form.get("password")):
+                    login_user["user_password"],
+                    request.form.get("password")):
                     session["user"] = request.form.get("username").lower()
                     flash("Welcome {}".format(request.form.get("username")))
-                    return redirect(url_for("dashboard", username=session["user"]))
+                    return redirect(
+                        url_for("dashboard", username=session["user"]))
             else:
                 # if the password does not match
                 flash("Username and/or password are not correct")
                 return redirect(url_for("login"))
 
-        #if username does not match
+        # if username does not match
         else:
             flash("Username and/or password are not correct")
             return redirect(url_for("login"))
@@ -198,10 +213,9 @@ def login():
 
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
-    #grab the session user and find user in database
-    #import pdb; pdb.set_trace()
+    # grab the session user and find user in database
 
-    #check if user is in session, if not redirect to login page
+    # check if user is in session, if not redirect to login page
     if not is_authenticated():
         flash("You are not logged in, you must log in first")
         return redirect(url_for("login"))
@@ -209,13 +223,24 @@ def dashboard():
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
     words = mongo.db.words.find()
-    user_type = mongo.db.users.find_one({"user_name": session["user"]})["user_type"]
-    words_active = mongo.db.words.count_documents({"word_submitted_by": session["user"], "word_status": "approved"})
-    words_pending = mongo.db.words.count_documents({"word_submitted_by": session["user"], "word_status": "pending_approval"})
-    words_to_approve = mongo.db.words.count_documents({"word_status": "pending_approval"})
-    
+    user_type = mongo.db.users.find_one(
+        {"user_name": session["user"]})["user_type"]
+    words_active = mongo.db.words.count_documents(
+        {"word_submitted_by": session["user"], "word_status": "approved"})
+    words_pending = mongo.db.words.count_documents(
+        {"word_submitted_by": session["user"],
+            "word_status": "pending_approval"})
+    words_to_approve = mongo.db.words.count_documents(
+        {"word_status": "pending_approval"})
 
-    return render_template("user_dashboard.html", username=username, words=list(words), user_type=user_type, words_active=words_active, words_pending=words_pending, words_to_approve=words_to_approve)
+    return render_template(
+        "user_dashboard.html",
+        username=username,
+        words=list(words),
+        user_type=user_type,
+        words_active=words_active,
+        words_pending=words_pending,
+        words_to_approve=words_to_approve)
 
 
 @app.route("/submit_word", methods=["GET", "POST"])
@@ -230,7 +255,8 @@ def submit_word():
             new_word_value = new_word_value.lower()
 
     if request.method == "POST":
-        existing_word = mongo.db.words.find_one({"word": request.form.get("word").lower()})
+        existing_word = mongo.db.words.find_one(
+            {"word": request.form.get("word").lower()})
 
         if not existing_word:
             word = {
@@ -244,14 +270,19 @@ def submit_word():
                 "word_submitted_datetime": datetime.now()
             }
             mongo.db.words.insert_one(word)
-            flash("Word added successfully. Once reviewed by the editors, it will display in the dictionary")
+            flash(
+                "Word added successfully. Once reviewed by the editors,\
+                     it will display in the dictionary")
             return redirect(url_for("dashboard", username=session["user"]))
         else:
             flash("This word already exists, please submit a new word")
             return redirect(url_for("submit_word"))
 
     categories = mongo.db.category.find()
-    return render_template("submit_word.html", categories = categories, new_word=new_word_value)
+    return render_template(
+        "submit_word.html",
+        categories=categories,
+        new_word=new_word_value)
 
 
 @app.route("/edit_word/<word_id>", methods=["GET", "POST"])
@@ -268,19 +299,27 @@ def edit_word(word_id):
                 "word_submitted_datetime": datetime.now()
             }
         mongo.db.words.update({"_id": ObjectId(word_id)}, edit_word)
-        flash("Word successfully updated. The word is in the pending queue and will be reviewed by one of the editors.")
+        flash(
+            "Word successfully updated. The word is in the pending queue \
+                and will be reviewed by one of the editors.")
         return redirect(url_for("dashboard", username=session["user"]))
 
     word = mongo.db.words.find_one({"_id": ObjectId(word_id)})
 
     categories = mongo.db.category.find()
-    return render_template("edit_word.html", word=word, categories = categories)
+    return render_template(
+        "edit_word.html",
+        word=word,
+        categories=categories)
 
 
 @app.route("/approve/<word_id>")
 def approve(word_id):
     word = mongo.db.words.find_one({"_id": ObjectId(word_id)})
-    mongo.db.words.update({"_id": ObjectId(word_id)}, { "$set" : {"word_approved_by": session["user"], "word_status":"approved"}})
+    mongo.db.words.update(
+        {"_id": ObjectId(word_id)},
+        {"$set": {"word_approved_by": session["user"],
+         "word_status": "approved"}})
     flash("Approved")
     return redirect(url_for("dashboard", username=session["user"]))
 
@@ -295,10 +334,14 @@ def delete_word(word_id):
 @app.route("/change_pwd", methods=["GET", "POST"])
 def change_pwd():
     if request.method == "POST":
-        old_pwd = mongo.db.users.find_one({"user_name": session["user"]})["user_password"]
-        
+        old_pwd = mongo.db.users.find_one(
+            {"user_name": session["user"]})["user_password"]
+
         if check_password_hash(old_pwd, request.form.get("old_pwd")):
-            mongo.db.users.update_one({"user_name": session["user"]}, { "$set": {"user_password": generate_password_hash(request.form.get("regpassword"))} })
+            mongo.db.users.update_one(
+                {"user_name": session["user"]},
+                {"$set": {"user_password": generate_password_hash(
+                    request.form.get("regpassword"))}})
             flash("Password Successfully updated")
             return redirect(url_for("dashboard", username=session["user"]))
         else:
@@ -308,7 +351,7 @@ def change_pwd():
     return render_template("change_pwd.html")
 
 
-@app.route("/admin_panel", methods = ["GET", "POST"])
+@app.route("/admin_panel", methods=["GET", "POST"])
 def admin_panel():
 
     if not is_authenticated():
@@ -319,26 +362,30 @@ def admin_panel():
 
     if request.method == "POST":
         user_type_change = {
-            "user_name" : request.form.get("user_id"),
-            "user_type" : request.form.get("user_type")
+            "user_name": request.form.get("user_id"),
+            "user_type": request.form.get("user_type")
         }
-        current_type = mongo.db.users.find_one({"user_name": request.form.get("user_id")})['user_type']
+        current_type = mongo.db.users.find_one(
+            {"user_name": request.form.get("user_id")})['user_type']
         if user_type_change['user_type'] == current_type:
             flash("This user is already {}".format(current_type))
             return redirect(url_for("admin_panel"))
-        elif user_type_change['user_type'] == None:
+        elif user_type_change['user_type'] is None:
             flash("You must select a type for the user. No changes made!")
             return redirect(url_for("admin_panel"))
         elif user_type_change['user_name'] == session['user']:
             flash('Cannot change your own type')
             return redirect(url_for('admin_panel'))
         else:
-            mongo.db.users.update_one({"user_name": user_type_change['user_name']}, {"$set": {"user_type": user_type_change['user_type']}})
-            flash(f"{user_type_change['user_name']} successfully changed to {user_type_change['user_type']}")
+            mongo.db.users.update_one(
+                {"user_name": user_type_change['user_name']},
+                {"$set": {"user_type": user_type_change['user_type']}})
+            flash(
+                f"{user_type_change['user_name']} successfully changed to \
+                    {user_type_change['user_type']}")
             return redirect(url_for("dashboard"))
-    
 
-    return render_template("admin_panel.html", users = users)    
+    return render_template("admin_panel.html", users=users)
 
 
 @app.route("/logout")
@@ -348,25 +395,32 @@ def logout():
     return redirect(url_for("dictionary"))
 
 
-# Error code taken from askPython https://www.askpython.com/python-modules/flask/flask-error-handling
+# Error code taken from askPython
+# https://www.askpython.com/python-modules/flask/flask-error-handling
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html")
+
 
 @app.errorhandler(500)
 def internal_error(e):
     return render_template("500.html")
 
 
-# Code taken from previous student project "ai-chat-annotator" by "NgiapPuoyKoh" from https://github.com/NgiapPuoyKoh/ai-chat-annotator/blob/7b37842579f8d1783de8d11be544f9790b248f05/app.py
+# Code taken from previous student project "ai-chat-annotator"
+# by "NgiapPuoyKoh" from
+# https://github.com/NgiapPuoyKoh/ai-chat-annotator/blob/7b37842579f8d1783de8d11be544f9790b248f05/app.py
 
 def is_authenticated():
     ''' Is there a user in the session '''
 
     return 'user' in session
 
+
 def is_admin():
-    user_type = mongo.db.users.find({"user_name": session['user']})['user_type']
+    user_type = mongo.db.users.find(
+        {"user_name": session['user']})['user_type']
     if user_type == "admin":
         return True
     else:
@@ -376,5 +430,5 @@ if __name__ == "__main__":
     app.run(
         host=os.environ.get("IP"),
         debug=True,
-        port = int(os.environ.get("PORT"))
+        port=int(os.environ.get("PORT"))
     )
