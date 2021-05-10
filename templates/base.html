@@ -15,7 +15,8 @@
 
 <!-- Flexbox code taken from https://stackoverflow.com/questions/40853952/bootstrap-footer-at-the-bottom-of-the-page/40854221 answer by Rober Beckson
         purpose is stick footer to the bottom -->
-<body class="d-flex flex-column min-vh-100"> 
+
+<body class="d-flex flex-column min-vh-100">
 
     <!-- Main navigation bar -->
     <header>
@@ -76,7 +77,7 @@
         {% endif %}
         {% endwith %}
     </div>
-<div class="wrapper flex-grow-1">
+    <div class="wrapper flex-grow-1">
         <main class="container">
             {% block content %}
 
@@ -84,29 +85,32 @@
         </main>
     </div>
 
-        <footer class="mt-5">
-            <div class="container-fluid">
-                <div class="row border-top">
-                    <div class="col-sm-12 col-md-4">
-                        <h4>Mission</h4>
-                        <p>
-                            The mission of Cruise Ship Crew Dictionary is to provide a central place where cruise ship crew can look up words used by sailors around the world.
-                            We welcome all to contribute to this dictionary to make it the best resource for anyone wishing to work in this industry.
-                        </p>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <h4>
-                            
-                        </h4>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <h4>
-                            &copy 2021
-                        </h4>
-                    </div>
+    <footer class="mt-5">
+        <div class="container-fluid">
+            <div class="row justify-content-md-center">
+
+                <div class="col-sm-12 col-md-6 text-center">
+                    <h4>Mission</h4>
+                    <p>
+                        The mission of Cruise Ship Crew Dictionary is to provide a central place where cruise ship crew
+                        can look up words used by sailors around the world.
+                        We welcome all to contribute to this dictionary to make it the best resource for anyone wishing
+                        to work in this industry.
+                    </p>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-sm-12 col-md-6 text-center">
+                   <p><a href="#">Contact</a> | <a href="#" class="btn-link disabled">Sitemap</a> | <a href="{{url_for('about')}}">About</a></p>
+                </div>
+                
+                <div class="col-sm-12 text-center">
+                    <p>
+                        &copy 2021
+                    </p>
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
