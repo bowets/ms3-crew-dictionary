@@ -395,8 +395,13 @@ def logout():
     return redirect(url_for("dictionary"))
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
+
+    if request.method == "POST":
+        flash("The contact form is not in service, but I am working on it.")
+        return redirect(url_for('dictionary'))
+
     return render_template("contact.html")
 
 
