@@ -326,6 +326,12 @@ def admin_panel():
         if user_type_change['user_type'] == current_type:
             flash("This user is already {}".format(current_type))
             return redirect(url_for("admin_panel"))
+        elif user_type_change['user_type'] == None:
+            flash("You must select a type for the user. No changes made!")
+            return redirect(url_for("admin_panel"))
+        elif user_type_change['user_name'] == session['user']:
+            flash('Cannot change your own type')
+            return redirect(url_for('admin_panel'))
         else:
             mongo.db.users.update_one({"user_name": user_type_change['user_name']}, {"$set": {"user_type": user_type_change['user_type']}})
             flash(f"{user_type_change['user_name']} successfully changed to {user_type_change['user_type']}")
