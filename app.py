@@ -311,7 +311,7 @@ def edit_word(word_id):
                 "edit_word.html",
                 word=word,
                 categories=categories)
-        else: 
+        else:
             abort(404)
     else:
         return redirect(url_for("dictionary"))
@@ -326,10 +326,10 @@ def approve(word_id):
         mongo.db.words.update(
             {"_id": ObjectId(word_id)},
             {"$set": {"word_approved_by": session["user"],
-            "word_status": "approved"}})
+             "word_status": "approved"}})
         flash("Approved")
         return redirect(url_for("dashboard", username=session["user"]))
-    else: 
+    else:
         flash("You do not have permission to exectute that operation")
         return redirect(url_for("dictionary"))
 
@@ -345,6 +345,7 @@ def delete_word(word_id):
     else:
         flash("You do not have permission to exectute that operation")
         return redirect(url_for("dictionary"))
+
 
 @app.route("/change_pwd", methods=["GET", "POST"])
 def change_pwd():
@@ -443,6 +444,7 @@ def is_authenticated():
 
     return 'user' in session
 
+
 def is_editor_or_admin():
     if not is_authenticated():
         return False
@@ -450,12 +452,14 @@ def is_editor_or_admin():
         {"user_name": session['user']})['user_type']
     return True if user_type == "admin" or user_type == "editor" else False
 
+
 def is_admin():
     if not is_authenticated():
         return False
     user_type = mongo.db.users.find_one(
         {"user_name": session['user']})['user_type']
     return True if user_type == "admin" else False
+
 
 def is_object_id_valid(id_value):
     """ Validate is the id_value is a valid ObjectId
