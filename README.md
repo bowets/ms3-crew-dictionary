@@ -52,55 +52,67 @@ The wireframes were created at the beginning and throughout the project to aid w
 ## Dictionary
 The dictionary is set as the main and landing page of the website. When a visitor navigates to the website they will see the dictionary. The dictionary consists of the navigation bar on the top, a title, a search bar, words and definitions and a footer element. The main parts of the dictionary are the search bar and the word cards which are displayed underneath. Visitors can search for specific words or terms in the definitions or they can browse the list of words. The list of words is paginated and each page will show 5 word cards.
 
-## Word Cards
-Word cards are elements which hold the words, their definition, their type and who submitted the word. 
-### Words
-Each word card has a word which is clearely displayed at the top of the card
-
-### Word Type
-When submitting words, users must select the type for a word. Words can be either nouns, verbs or adjectives. Generally, words can be other types as well, but that can be added in a future update to the dictionary. 
-
-### Word Definition
-Underneath the word type is the definition. This is a required field when filling out 
 ## Navigation
 
+The navigation bar at the top of the page has the page title and logo aligned to the left side and the links aligned to the right side. The links displyed on the navigation bar change depending on the log in status of the user. If a visitor is not logged in, they will see a link for the home page, the about page, the register page and the log in page. 
 
+If a user is logged in, they do not see the register and log in page links, but instead see a "User Tools" dropdown menu. 
+In the user tools menu, logged in users can see their profile dashboard, they can submit a new word, change their password and log out. 
 ## Footer
-
+The footer is standard across all pages on the website and it shows the mission statement for the website, a contact link which links to a contact page (The contact page is not set up to work), a sitemap which is currently dissabled and the about page. There is also a copyright symbol at the very bottom. 
 
 ## About
-
+The about page provides information about the dictionary and the reason why it was created.
 
 ## Register
-
+The register page offers visitors the posiblity to register to become users and contribute to the dictionary. 
+The visitor needs to select a username and password. Form validation is in place to make sure the username is not shorter than 5 characters. Another form validation rule is to make sure the user inputs the same password twice to avoid any typos. If the passwords don't match, the user will be prompted to correct it. 
+If the username the user choses is already taken, the application will inform the user to choose another username.
+If the user on this page already has an account, there is a link underneath the submit button to take them to the log in page. 
 
 ## Log In
+Users who have an account can submit their username and password to log into their account. 
+If a visitor does not have an account, a link at the bottom of the form will take them to the registration page. 
+Once the user enters their username and password and logs in, they will be taken to their user dashboard. 
 
 
 ## User Tools
-
-
+When a user logs in, the "Register" and "Log In" links on the navigation bar will change to a "User Tools" dropdown menu. 
+In the user tools, the user can access their dashboard, submit a new word to the dictionary, change their password and log out. 
+The user tools were put into a dropdown menu as a design decition to not clutter the navigation bar, especially no mobile devices. 
 ## Profile Dashboard
+When a user logs into their account, they will be taken directly to the user dashboard. Depending on the user type, they will see a different dashboard. 
+If a regular user logs in, they will see the page title as "[username] Dashboard". Underneath the title is a button to submit a new word to the dictionary and underneath that is an accordion with two sections. The first section is a list of all words the user has submitted and which were approved. The second section are all words that the user has submitted which are waiting to be approved by an editor or admin. 
 
+Editors see everything a user sees, but they have an additional section on the top of the accordion with a list of words waiting for approval. 
 
+Administrators see everything the editor sees, however, next to the submit a word button, administrators will see a button to change user status. 
 ## Submit Word
+All registered users, editors and administrators can submit a new word. 
+Submitting a new word is done through a form which has the following elements: 
+- Word - which word is being defined
+- Type - what is the word type (noun, verb, adjective)
+- Definition - what is the definition of the word?
+- Use in sentence - how to use the word in a sentence
 
-
+Users then have a choice to submit their word or to cancel and return to the dashboard. 
 ## Change Password
-
+If a user wishes to change their password, they will be prompted for their old password and to enter a new password. There is a form validator on the server side to make sure the old password is correct as well as a client side validator to make sure the new password has been entered correctly twice. 
 
 ## 404 pages
+If a user navigates to a page which does not exist or if they do not have permission to access, they will be directed to a 404 error page. 
 
 ## Search
-
-
-
-## Log Out
+On the main dictionary page, users can search for specific words located either in the word field or the definition. 
 
 # User Types and permissions
+There are four types of users that this website is designed for:
 
 ## Visitor
+A visitor is anyone who navigates to this website and can see the dictionary. Visitors can view words and definition, the about page and they can register for an account. 
+The page is fully functional for read only access for visitors. 
 ## User
+A visitor who registeres for an account 
 
 ## Editor
 
