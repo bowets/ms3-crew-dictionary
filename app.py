@@ -287,53 +287,64 @@ def submit_word():
 
 @app.route("/edit_word/<word_id>", methods=["GET", "POST"])
 def edit_word(word_id):
-    if is_authenticated():
-
-
-    if request.method == "POST":
-        
-        edit_word = {
-                "word": request.form.get("word").lower(),
-                "word_category": request.form.get("word_category"),
-                "word_definition": request.form.get("word_definition"),
-                "word_sentence": request.form.get("word_sentence"),
-                "word_submitted_by": session["user"],
-                "word_approved_by": "",
-                "word_status": "pending_approval",
-                "word_submitted_datetime": datetime.now()
-            }
-        mongo.db.words.update({"_id": ObjectId(word_id)}, edit_word)
-        flash(
-            "Word successfully updated. The word is in the pending queue \
-                and will be reviewed by one of the editors.")
-        return redirect(url_for("dashboard", username=session["user"]))
-
-    word = mongo.db.words.find_one({"_id": ObjectId(word_id)})
-
-    categories = mongo.db.category.find()
-    return render_template(
-        "edit_word.html",
-        word=word,
-        categories=categories)
+    if is_editor_or_admin():
+        if request.method == "POST":
+            edit_word = {
+                    "word": request.form.get("word").lower(),
+                    "word_category": request.form.get("word_category"),
+                    "word_definition": request.form.get("word_definition"),
+                    "word_sentence": request.form.get("word_sentence"),
+                    "word_submitted_by": session["user"],
+                    "word_approved_by": "",
+                    "word_status": "pending_approval",
+                    "word_submitted_datetime": datetime.now()
+                }
+            mongo.db.words.update({"_id": ObjectId(word_id)}, edit_word)
+            flash(
+                "Word successfully updated. The word is in the pending queue \
+                    and will be reviewed by one of the editors.")
+            return redirect(url_for("dashboard", username=session["user"]))
+        if is_object_id_valid(word_id):
+            word = mongo.db.words.find_one_or_404({"_id": ObjectId(word_id)})
+            categories = mongo.db.category.find()
+            return render_template(
+                "edit_word.html",
+                word=word,
+                categories=categories)
+        else: 
+            abort(404)
+    else:
+        return redirect(url_for("dictionary"))
 
 
 @app.route("/approve/<word_id>")
 def approve(word_id):
-    word = mongo.db.words.find_one({"_id": ObjectId(word_id)})
-    mongo.db.words.update(
-        {"_id": ObjectId(word_id)},
-        {"$set": {"word_approved_by": session["user"],
-         "word_status": "approved"}})
-    flash("Approved")
-    return redirect(url_for("dashboard", username=session["user"]))
+    if is_editor_or_admin():
+        if not is_object_id_valid(word_id):
+            abort(404)
+        word = mongo.db.words.find_one({"_id": ObjectId(word_id)})
+        mongo.db.words.update(
+            {"_id": ObjectId(word_id)},
+            {"$set": {"word_approved_by": session["user"],
+            "word_status": "approved"}})
+        flash("Approved")
+        return redirect(url_for("dashboard", username=session["user"]))
+    else: 
+        flash("You do not have permission to exectute that operation")
+        return redirect(url_for("dictionary"))
 
 
 @app.route("/delete_word/<word_id>")
 def delete_word(word_id):
-    mongo.db.words.remove({"_id": ObjectId(word_id)})
-    flash("Word successfully deleted")
-    return redirect(url_for("dictionary"))
-
+    if is_editor_or_admin():
+        if not is_object_id_valid(word_id):
+            abort(404)
+        mongo.db.words.remove({"_id": ObjectId(word_id)})
+        flash("Word successfully deleted")
+        return redirect(url_for("dictionary"))
+    else:
+        flash("You do not have permission to exectute that operation")
+        return redirect(url_for("dictionary"))
 
 @app.route("/change_pwd", methods=["GET", "POST"])
 def change_pwd():
@@ -435,16 +446,21 @@ def is_authenticated():
 def is_editor_or_admin():
     if not is_authenticated():
         return False
-    user_type = mongo.db.users.find(
+    user_type = mongo.db.users.find_one(
         {"user_name": session['user']})['user_type']
-    return if user_type == "admin" or user_type == "editor" ? True : False
+    return True if user_type == "admin" or user_type == "editor" else False
 
 def is_admin():
     if not is_authenticated():
         return False
-    user_type = mongo.db.users.find(
+    user_type = mongo.db.users.find_one(
         {"user_name": session['user']})['user_type']
-    return if user_type == "admin" ? True : False
+    return True if user_type == "admin" else False
+
+def is_object_id_valid(id_value):
+    """ Validate is the id_value is a valid ObjectId
+    """
+    return id_value != "" and ObjectId.is_valid(id_value)
 
 
 if __name__ == "__main__":
