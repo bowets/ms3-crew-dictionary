@@ -432,14 +432,20 @@ def is_authenticated():
 
     return 'user' in session
 
-
-def is_admin():
+def is_editor_or_admin():
+    if not is_authenticated():
+        return False
     user_type = mongo.db.users.find(
         {"user_name": session['user']})['user_type']
-    if user_type == "admin":
-        return True
-    else:
+    return if user_type == "admin" or user_type == "editor" ? True : False
+
+def is_admin():
+    if not is_authenticated():
         return False
+    user_type = mongo.db.users.find(
+        {"user_name": session['user']})['user_type']
+    return if user_type == "admin" ? True : False
+
 
 if __name__ == "__main__":
     app.run(
