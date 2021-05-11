@@ -6,6 +6,13 @@ Cruise Ship Crew Dictionary - Admin Panel
 
 {% block content %}
 
+<!-- 
+
+    ADMIN PANEL
+    Administrators can change user types between "user", "editor" & "admin"
+    to give or remove rights
+
+ -->
 <div class="container">
     <div class="row">
         <div class="col text-center">
@@ -19,6 +26,7 @@ Cruise Ship Crew Dictionary - Admin Panel
         <div class="col">
             <form action="" method="POST">
 
+                <!-- -----------Admin Card to select user and set their user type----------- -->
                 <div class="card">
                     <div class="card-body row">
                         <div class="col-sm-3">
@@ -32,18 +40,18 @@ Cruise Ship Crew Dictionary - Admin Panel
                         </div>
                         <div class="col-sm-9 d-flex flex-row-reverse">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="user_type"
-                                    id="inlineRadioadmin" value="admin">
+                                <input class="form-check-input" type="radio" name="user_type" id="inlineRadioadmin"
+                                    value="admin">
                                 <label class="form-check-label" for="inlineRadioadmin">Admin</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="user_type"
-                                    id="inlineRadioeditor" value="editor">
+                                <input class="form-check-input" type="radio" name="user_type" id="inlineRadioeditor"
+                                    value="editor">
                                 <label class="form-check-label" for="inlineRadioeditor">Editor</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="user_type"
-                                    id="inlineRadiouser" value="user">
+                                <input class="form-check-input" type="radio" name="user_type" id="inlineRadiouser"
+                                    value="user">
                                 <label class="form-check-label" for="inlineRadiouser">User</label>
                             </div>
                         </div>

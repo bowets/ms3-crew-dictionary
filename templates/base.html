@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}"
+        type="text/css">
 
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css">
     <link rel="shortcut icon" type="image/jpg" href="/static/img/favicon.ico" />
@@ -17,7 +18,7 @@
 
 <body class="d-flex flex-column min-vh-100">
 
-    <!-- Main navigation bar -->
+    <!-- -----------Main navigation bar----------- -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="{{url_for('dictionary')}}"><img src="/static/img/cruise_ship_nav_brand.png"
@@ -35,6 +36,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('about')}}">About</a>
                     </li>
+
+                    <!-- If the user is not logged in they will see Register and Log in -->
                     {% if not session["user"] %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('register')}}">Register</a>
@@ -42,6 +45,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('login')}}">Log In</a>
                     </li>
+
+                    <!-- If the user is logged in they will see a user tools menu -->
+
                     {% else %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -76,6 +82,9 @@
         {% endif %}
         {% endwith %}
     </div>
+
+    <!-- -----------MAIN CONTENT ----------- -->
+
     <div class="wrapper flex-grow-1">
         <main class="container">
             {% block content %}
@@ -84,6 +93,8 @@
         </main>
     </div>
 
+
+    <!-- ----------- FOOTER ----------- -->
     <footer class="mt-5">
         <div class="container-fluid">
             <div class="row justify-content-md-center">
@@ -99,9 +110,10 @@
                 </div>
                 <div class="w-100"></div>
                 <div class="col-sm-12 col-md-6 text-center">
-                   <p><a href="{{url_for('contact')}}">Contact</a> | <a href="#" class="btn-link disabled">Sitemap</a> | <a href="{{url_for('about')}}">About</a></p>
+                    <p><a href="{{url_for('contact')}}">Contact</a> | <a href="#" class="btn-link disabled">Sitemap</a>
+                        | <a href="{{url_for('about')}}">About</a></p>
                 </div>
-                
+
                 <div class="col-sm-12 text-center">
                     <p>
                         &copy; 2021

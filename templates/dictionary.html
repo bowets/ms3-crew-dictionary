@@ -10,7 +10,7 @@ Cruise Ship Crew Dictionary
 <div class="container">
     <div class="row">
 
-        <!-- Page title -->
+        <!-- -----------Page title----------- -->
 
         <div class="col-12 text-center">
             <h1>Cruise Ship Crew Dictionary</h1>
@@ -18,39 +18,28 @@ Cruise Ship Crew Dictionary
                 around the world!</p>
         </div>
 
-        <!-- Search box -->
+        <!-- -----------Search box----------- -->
 
         <form class="col-12" method="GET" action="{{url_for('search')}}">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" name="query" id="query" {% if search_value !="" %}
-                    value="{{search_value}}" {% endif %} placeholder="Search words and definitions"
-                    aria-label="query" aria-describedby="query">
+                    value="{{search_value}}" {% endif %} placeholder="Search words and definitions" aria-label="query"
+                    aria-describedby="query">
                 <button class="btn btn-outline-secondary" type="submit" id="search">Search</button>
                 <a href="{{url_for('dictionary')}}" class="btn btn-outline-secondary">Clear</a>
             </div>
         </form>
         <div class="col-12">
 
-            <!-- Top pagination component -->
+            <!-- -----------Top pagination component----------- -->
             <div class="row">
                 <div class="col">
                     {{ components.pagination(url_for('dictionary'), words) }}
                 </div>
             </div>
 
-            <!-- If no words returned in the search -->
-            {% if not words %}
-            <div class="row">
-                <div class="col text-center">
-                    <h2>There are no records for this word</h2>
-                    <p>Would you like to add this word to the dictionary?</p>
-                    <a href="{{url_for('submit_word')}}" class="btn btn-primary mb-4">Add <strong>{{search_value}}</strong> to dictionary</a>
-                </div>
-            </div>
-            {% endif %}
-            
             {% for word in words['items'] %}
-            
+
             {% if word.word_status == "approved" %}
             <div class="card">
 
@@ -62,13 +51,15 @@ Cruise Ship Crew Dictionary
                         <div class="col-3">
                             {% if session.get('user')%}
                             {% if user_type == "editor" or user_type == "admin" %}
-                            <!-- Button trigger modal -->
+                            <!-- -----------Button trigger modal----------- -->
                             <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
                                 data-target="#delete-word{{word._id}}">
                                 Delete
                             </button>
+                            <!-- -----------Edit word for admins and editors----------- -->
+                            <a href="{{url_for('edit_word', word_id=word._id)}}" class="btn btn-sm btn-primary">Edit</a>
 
-                            <!-- Modal -->
+                            <!-- -----------Delete Word Modal----------- -->
                             <div class="modal fade" id="delete-word{{word._id}}" data-backdrop="static"
                                 data-keyboard="false" tabindex="-1" aria-labelledby="delete-word-modal"
                                 aria-hidden="true">
@@ -108,7 +99,9 @@ Cruise Ship Crew Dictionary
                     <p><em><mark>{{word.word_category}}</mark></em></p>
                     <p><span class="font-weight-bold">Definition: </span>{{word.word_definition}}</p>
                     <p><span class="font-weight-bold">Used in a sentence: </span>{{word.word_sentence}}</p>
-                    <p class="font-weight-light font-italic"><a href="{{url_for('search_user', submitted_by = word.word_submitted_by)}}">{{word.word_submitted_by}}</a></p>
+                    <p class="font-weight-light font-italic"><a
+                            href="{{url_for('search_user', submitted_by = word.word_submitted_by)}}">{{word.word_submitted_by}}</a>
+                    </p>
                 </div>
             </div>
             {% endif %}
