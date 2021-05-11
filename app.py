@@ -171,7 +171,7 @@ def register():
 
         session["user"] = request.form.get("username").lower()
         flash("Registration Successfull")
-        return redirect(url_for("dashboard", username=session["user"]))
+        return redirect(url_for("dashboard"))
 
     return render_template("register.html")
 
@@ -390,8 +390,9 @@ def admin_panel():
 
 @app.route("/logout")
 def logout():
-    flash("You have been logged out")
-    session.pop("user", None)
+    if is_authenticated():
+        flash("You have been logged out")
+        session.pop("user", None)
     return redirect(url_for("dictionary"))
 
 
