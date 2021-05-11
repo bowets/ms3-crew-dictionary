@@ -6,9 +6,9 @@ I also hope to release this website once it is graded for the milestone project 
 
 # UX
 
-![Am I responsive image](readme_img\amiresponsive_cruise_ship_crew_dictionary.jpg "Responsive design for Cruise Ship Crew Dictionary")
+![Am I responsive image](readme_img/amiresponsive_cruise_ship_crew_dictionary.jpg "Responsive design for Cruise Ship Crew Dictionary")
 
-This is a dictionary and the main focus are the words and definitions submitted by users. For this reason, the landing page is allows anyone, whether registered or unregistered to browse the list of words in the dictionary. 
+This is a dictionary and the main focus are the words and definitions submitted by users. For this reason, the landing page allows anyone, whether registered or unregistered to browse the list of words in the dictionary. 
 The design is clean with few distractions to alow for focus to the words themselves. The main dictionary page is paginated to prevent endless scrolling as more words are added and features a search bar where users can search for words or definitions.
 When landing on the first page, users can navigate to the "About" page which explains the purpose of the dictionary, users can register an account or log in if they already have an account. The design of the page is minimalistic as the whole purpose of the site is to allow users to browse and/or add words to the dictionary. 
 
