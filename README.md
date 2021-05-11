@@ -5,7 +5,11 @@ Since working on a cruise ship I tried to find a resource where I can remember t
 I also hope to release this website once it is graded for the milestone project and after a few more fixes which need to be done and those are referenced in the readme below. 
 
 #UX
-This is a dictionary and the main focus are the words and definitions submitted by users. 
+
+![Am I responsive image](readme_img\amiresponsive_cruise_ship_crew_dictionary.jpg "Responsive design for Cruise Ship Crew Dictionary")
+
+This is a dictionary and the main focus are the words and definitions submitted by users. For this reason, the landing page is allows anyone, whether registered or unregistered can browse the list of words in the dictionary. 
+
 
 ##General
 
