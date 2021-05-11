@@ -187,17 +187,17 @@ def login():
 
     # if no users logged in, log in user
     if request.method == "POST":
+        username = request.form.get("username").lower()
         login_user = mongo.db.users.find_one(
-            {"user_name": request.form.get("username").lower()})
+            {"user_name": username})
 
         if login_user:
             if check_password_hash(
                     login_user["user_password"],
                     request.form.get("password")):
-                    session["user"] = request.form.get("username").lower()
+                    session["user"] = username
                     flash("Welcome {}".format(request.form.get("username")))
-                    return redirect(
-                        url_for("dashboard", username=session["user"]))
+                    return redirect(url_for("dashboard"))
             else:
                 # if the password does not match
                 flash("Username and/or password are not correct")
@@ -287,7 +287,11 @@ def submit_word():
 
 @app.route("/edit_word/<word_id>", methods=["GET", "POST"])
 def edit_word(word_id):
+    if is_authenticated():
+
+
     if request.method == "POST":
+        
         edit_word = {
                 "word": request.form.get("word").lower(),
                 "word_category": request.form.get("word_category"),
