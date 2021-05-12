@@ -105,6 +105,10 @@ If a user navigates to a page which does not exist or if they do not have permis
 ## Search
 On the main dictionary page, users can search for specific words located either in the word field or the definition. 
 
+# Features to implement in future updates
+
+## 
+
 # User Types and permissions
 There are four types of users that this website is designed for:
 
@@ -119,17 +123,92 @@ Editors have all the rights of a user, but also have the responsibility to check
 ## Admin
 Administrators have all the rights of an editor, but they also have the right to change user types for all users between user / editor / admin. They can change any user except themselves. This is a security feature so that an administrator doesn't accidentaly change their own permissions. 
 # CRUD - Create, Read, Update and Delete
-As part of the milestone project, we have to demonstrate that our application can perform CRUD operations. The 
+As part of the milestone project, we have to demonstrate that our application can perform CRUD operations.
+
+|   	|  Create 	|  Read 	| Update  	| Delete  	|
+|---	|---	|---	|---	|---	|
+| Visitor  	| No  	| Yes  	| No  	| No  	|
+|  User 	| Yes  	|  Yes 	| Yes  	|  No 	|
+| Editor  	|  Yes 	| Yes  	| Yes  	| Yes  	|
+| Admin  	|  Yes 	| Yes  	| Yes  	|  Yes 	|
+
+As seen in the table above, all CRUD functionality is present in the application, however, CRUD operations are restricted to some user types. 
+
 ## Create
+
+### Submit new word
+All users, editors & admins are able to submit new words to the dictionary. Each submission creates a new record in the database.
+
+### Register new user
+Anyone who does not have an account is able to register for an account. The register function creates a new record in the database for that user. 
 
 ## Read
 
+### Display words from the database
+All visitors, users, editors and admins are able to read records from the database in the form of words in the dictionary. The application reads from the words collection in the database and displays the words in the dictionary.
+
+### Search
+All visitors, users, editors and admins are able to search for words within the dictionary. This function reads from the database and displays the searched terms on the search page
+
+### Search by "submitted by"
+All visitors, users, editors and admins are able to search by user submitted words. Each word card in the dictionary has an entry of who submitted this word. By clicking on the link, the application reads from the database and displays all words submitted and approved by that particular user. 
+
 ## Update
+
+### Edit words
+All editors and administrators have the ability to update or edit words submitted by other users. Editors and administrators can see edit buttons next to each word in the dictionary itself, or on their user dashboards. When editing a word, the application updates the record of that word with new values.
+
+Users have the ability to update words which they have submitted before the words are approved. This option is available in the user dashboard for each user. The application updates the values in the record for that word and sends the word to an editor or administrator for review. 
+
+### Edit user types
+Admins have the right to update user types. Admins have an additional option in the dashboard where they can choose a user and update their type between user / editor / admin. However, administrators cannot update their own type as a security measure so that they do not accidentally remove their own permissions. 
 
 ## Delete
 
+### Reject words
+Editors and administrators have the ability to reject words submitted by other users. The application then removes that word from the collection.
+
+### Delete word
+Editors and administrators have the ability to delete words which have been submitted and approved. This is in case a word is approved accidentally so that it can be deleted from the dictionary. The application removes the word from the collection. 
+
 
 # Technologies Used
+
+## Languages
+* [HTML](https://en.wikipedia.org/wiki/HTML) - HyperText Markup Language - used to build up the foundation of the webpages in this project. Mostly used in files ending in `.html`
+* [CSS](https://en.wikipedia.org/wiki/CSS) - Cascading Style Sheets - Used to style the pages in this project. Located in files ending with `.css`
+* [JavaScript](https://en.wikipedia.org/wiki/JavaScript) - JavaScript - Used to provide form validation on the Register and Change Password Pages. File ending in `.js`
+* [Python](https://www.python.org/) - Used to build the back end of the web application. Stored in files ending with `.py`
+
+## Libraries
+
+* [Bootstrap 4.6](https://getbootstrap.com/docs/4.6/getting-started/introduction/) - A front end framework used extensivelly in this project
+* [Flask](https://flask.palletsprojects.com/en/2.0.x/) - A lightweight WSGI web application framework used for routing and backend of this project.
+* [Jinja](https://www.palletsprojects.com/p/jinja/) - Template engine used to render web pages and components
+* [Pymongo](https://pypi.org/project/pymongo/) - a component imported into Python to allow access and CRUD operations with a mongoDB database
+
+## Hosting
+
+* [Heroku](https://www.heroku.com/home) - A web hosting service that supports Python applications.
+## Tools
+
+* [MongoDB Atlas](https://www.mongodb.com/) - Document database to store data using NOSQL for this project
+* [GitHub](https://github.com/) - A cloud based code repository used to store all code files for this project
+* [VSCode](https://code.visualstudio.com/) - A cross platform code editor used to develop this project
+* [Microsoft Edge](https://www.microsoft.com/en-us/edge?r=1) - Web browser used for testing and page preview
+* [Google Chrome](https://www.google.com/intl/en_ie/chrome/) - Web browser user for testing
+* [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/) - Web browser used for testing
+* [Markdown Table Generator](https://www.tablesgenerator.com/markdown_tables) - Used to design the tables used in this readme file
+* [Balsamiq](https://balsamiq.com/wireframes/?gclid=CjwKCAjw-e2EBhAhEiwAJI5jg_33A7TEqNM59vO9PjRpE-ZjzkpAgjcfU7TXsKZhu4a3puGdzFaM3hoCqIUQAvD_BwE) - Wireframe creation tool. Used to design initial templates for the website pages
+
+## Testing
+* [Am I Responsive](http://ami.responsivedesign.is/) - Testing responsive design
+* [W3C Markup Validation Service](https://validator.w3.org/) - Testing that all HTML code is valid
+* [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Testing that all CSS code is valid
+* [JS Hint](https://jshint.com/) - Testing that all javascript code is valid
+* [PEP8 Online](http://pep8online.com/) - Testing that all python code is valid
+* [GTMetrix](https://gtmetrix.com/) - Loading time testing
+
 
 
 # Testing
@@ -152,11 +231,32 @@ As part of the milestone project, we have to demonstrate that our application ca
 
 ## Media
 
+* [TopPNG](https://toppng.com/cruise-ship-clip-art-cruise-ship-encode-clipart-to-cruise-ship-clipart-black-and-white-PNG-free-PNG-Images_164796) - Favicon and Navbar brand image
+* [Pixabay](https://pixabay.com/photos/lighthouse-light-sea-beacon-coast-2611199/) - Image used in "About" page by Evgeni Tcherkasski
 
-## Tutorials
+## Dictionary terms
+Some words in this dictionary were taken from the below resources
+
+* [Ship Dictionary](https://onboardwithlouis.wordpress.com/dictionary/)
+* [Cruise Ship Diary](https://milimundo.com/typical-crew-vocabulary-cruise-ships/)
+* [Cruise Ship Crew Dictionary](https://crew-center.com/cruise-ship-crew-dictionary-0)
+
+## Code
+Code snippets implemented in this project are credited below and in the file comments:
+
+* [Footer Sticks to bottom of the page](https://stackoverflow.com/questions/40853952/bootstrap-footer-at-the-bottom-of-the-page/60780493#60780493) - Credit to Robert Beckson
+* [Flask Error Handling](https://www.askpython.com/python-modules/flask/flask-error-handling) - Tutorial for Flask error handling
+* [Pagination](https://github.com/mirofrankovic/cookbook-trisport-project-03/blob/master/app.py#L26-L103) - Taken from project "cookbook-trisport-project-03" by mirofrankovic and modiffied to suit this project
+* [Check if authenticated user](https://github.com/NgiapPuoyKoh/ai-chat-annotator/blob/7b37842579f8d1783de8d11be544f9790b248f05/app.py#L534) - Taken from project ai-chat-annotator by NgiapPuoyKoh
 
 
 ## Acknowledgements
+
+My mentors Ignatius Ukwuoma and Guido Cecilio who provided feedback, learning resources and most importantly their time to ensure this project is completed and that the learning outcomes are achieved. 
+
+The Code Institute Slack community who helped in time of crisis and for providing feedback and peer review. Most of the provided suggestions have made it to the final product. 
+
+
 
 
 
