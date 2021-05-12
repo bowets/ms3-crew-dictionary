@@ -358,7 +358,6 @@ Due to table better table formatting - user story testing is available at the li
 # Deployment
 This site is deployed on [Heroku](https://www.heroku.com/home). Heroku is a free online hosting service for applications using multiple languages including Python. For this reason, it was chosen to host this project. To deploy this app on Heroku please follow the steps outlined below:
 
-## Github
 1. Navigate to the repository for this project [ms3-crew-dictionary](https://github.com/bowets/ms3-crew-dictionary) and click on the green button to open the menu
 
 2. You can either download the zip file and extract it into your local directory or copy the link to the repository and clone it in the command line
