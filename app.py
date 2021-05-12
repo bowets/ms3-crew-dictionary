@@ -33,7 +33,8 @@ KEY_PREV = 'prev_uri'
 
 mongo = PyMongo(app)
 
-# pagination function taken from project by
+# pagination function taken from project
+# "cookbook-trisport-project-03" by mirofrankovic
 
 
 def get_paginated_items(entity, **params):  # function
@@ -85,10 +86,13 @@ def get_paginated_items(entity, **params):  # function
 def dictionary():
 
     ''' Dictionary home page '''
+
     if request.method == 'GET':
         params = request.args.to_dict()
 
     paginated_words = get_paginated_items(mongo.db.words, **params)
+
+    # check if user is authenticated to render additional functions on dictionary page
     if is_authenticated():
         user_type = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
@@ -106,6 +110,7 @@ def search():
     find_word = request.args.get('query').lower()
     words = list(mongo.db.words.find({"$text": {"$search": find_word}}))
 
+    # checks if user is authenticated to render additional functions on search page
     if is_authenticated():
         user = mongo.db.users.find_one(
             {"user_name": session["user"]})["user_type"]
@@ -124,6 +129,8 @@ def search():
 @app.route("/search_user/<submitted_by>")
 def search_user(submitted_by):
 
+    ''' Search words by user "Submitted by"'''
+
     words = mongo.db.words.find({"word_submitted_by": submitted_by})
     if is_authenticated():
         user = mongo.db.users.find_one(
@@ -135,6 +142,7 @@ def search_user(submitted_by):
 
 @app.route("/about")
 def about():
+
     '''About dictionary'''
 
     return render_template("about.html")
@@ -142,13 +150,16 @@ def about():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+
     '''Register new user'''
 
     # Reference for this code is above function definition below
+    # Checks if user is authenticated and redirects to dashboard if logged in
     if is_authenticated():
         flash("Please log out first before registering a new user")
         return redirect(url_for("dashboard"))
 
+    # if user is not logged in a new account is created
     if request.method == "POST":
         existing_user = mongo.db.users.find_one(
             {"user_name": request.form.get("username").lower()})
@@ -178,6 +189,7 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
     '''Log in existing user'''
 
     # check if another user is already logged in
@@ -213,6 +225,9 @@ def login():
 
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
+
+    ''' User dashboard'''
+
     # grab the session user and find user in database
 
     # check if user is in session, if not redirect to login page
@@ -220,6 +235,7 @@ def dashboard():
         flash("You are not logged in, you must log in first")
         return redirect(url_for("login"))
 
+    # if user is logged in session, display user dashboard
     username = mongo.db.users.find_one(
         {"user_name": session["user"]})["user_name"]
     words = mongo.db.words.find()
@@ -245,10 +261,15 @@ def dashboard():
 
 @app.route("/submit_word", methods=["GET", "POST"])
 def submit_word():
+
+    ''' Submit new word'''
+
+    # if user is not authenticated, redirect to login page
     if not is_authenticated():
         flash("Please log in or register to submit a new word")
         return redirect(url_for('login'))
 
+    # if user is in session, submit new word
     if request.method == "GET":
         new_word_value = request.args.get('new_word')
         if new_word_value is not None:
@@ -270,10 +291,15 @@ def submit_word():
                 "word_submitted_datetime": datetime.now()
             }
             mongo.db.words.insert_one(word)
+        
+        # if new word is added successfully, redirect user to dashboard
             flash(
                 "Word added successfully. Once reviewed by the editors,\
                      it will display in the dictionary")
-            return redirect(url_for("dashboard", username=session["user"]))
+            return redirect(url_for("dashboard"))
+
+        # if the word already exists, redirect to new instance of the form
+        # and inform the word exists
         else:
             flash("This word already exists, please submit a new word")
             return redirect(url_for("submit_word"))
@@ -287,7 +313,11 @@ def submit_word():
 
 @app.route("/edit_word/<word_id>", methods=["GET", "POST"])
 def edit_word(word_id):
-    if is_editor_or_admin():
+
+    ''' Edit existing word '''
+
+    # Only editors and administrators are allowed to edit words
+    if is_authenticated():
         if request.method == "POST":
             edit_word = {
                     "word": request.form.get("word").lower(),

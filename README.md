@@ -16,6 +16,8 @@ When landing on the first page, users can navigate to the "About" page which exp
 The Cruise Ship Crew Dictionary is a simple dictionary designed in a minimalist style. The main elements of the page are the navigation bar at the top of the page, the main body where the words and definitions are displayed and the footer. Users are able to browse the dictionary and search for words and definitions without registering or logging in. For those who would like to contribute to the dictionary, they have the option to register an account in order to submit new words. When a user logs in, they are redirected to a user dashboard where they can see all of the words they have submitted separated into those which have been approved by an editor or administrator, and those words which are pending approval. Overall, the website follows a similar design pattern on all pages which was achieved using bootstrap as the front end framework. 
 
 ## User Stories
+
+**User stories from a perspective of a visitor**
 - As a user I want to find out the meaning of a word
   - The dictionary focuses on words and their definitions on the main page. Users can visit the dictionary and find the word and definition. 
 
