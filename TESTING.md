@@ -62,22 +62,22 @@
 | Test Case | User Story                                     | Expected Result                                                                                 | Actual Result |
 |-----------|------------------------------------------------|-------------------------------------------------------------------------------------------------|---------------|
 | 1.0       | As an editor I want to approve submitted word  | When logged into their dashboard, editors can see words submitted by users                      | Pass          |
-| 1.1       |                                                | Editors can see a button "Quick Approve" on each submitted word                                 | Pass          |
-| 1.2       |                                                | When the "Quick Approve" button is pressed, editor is informed the word was approved            | Pass          |
+| 1.1       | (subtest)                                      | Editors can see a button "Quick Approve" on each submitted word                                 | Pass          |
+| 1.2       | (subtest)                                      | When the "Quick Approve" button is pressed, editor is informed the word was approved            | Pass          |
 | 2.0       | As an editor I want to reject a submitted word | When logged into their dashboard, editors can see words submitted by users                      | Pass          |
-| 2.1       |                                                | Editors can see a button "Reject" on each submitted word                                        | Pass          |
-| 2.2       |                                                | When the "Reject" button is pressed, editor is informed that the word was successfully rejected | Pass          |
+| 2.1       | (subtest)                                      | Editors can see a button "Reject" on each submitted word                                        | Pass          |
+| 2.2       | (subtest)                                      | When the "Reject" button is pressed, editor is informed that the word was successfully rejected | Pass          |
 | 3.0       | As an editor I want to edit words              | Editor can see "Edit" button on any word rendered on any page                                   | Pass          |
-| 3.1       |                                                | When editor clicks "Edit" they are taken to the edit word page                                  | Pass          |
-| 3.2       |                                                | All word details are displayed in the edit word form                                            | Pass          |
-| 3.3       |                                                | Editor can change information in the form                                                       | Pass          |
-| 3.4       |                                                | Editor is informed that the edit was successful                                                 | Pass          |
-| 3.5       |                                                | Edited word is now waiting for approval                                                         | Pass          |
+| 3.1       | (subtest)                                      | When editor clicks "Edit" they are taken to the edit word page                                  | Pass          |
+| 3.2       | (subtest)                                      | All word details are displayed in the edit word form                                            | Pass          |
+| 3.3       | (subtest)                                      | Editor can change information in the form                                                       | Pass          |
+| 3.4       | (subtest)                                      | Editor is informed that the edit was successful                                                 | Pass          |
+| 3.5       | (subtest)                                      | Edited word is now waiting for approval                                                         | Pass          |
 | 4.0       | As an editor I want to delete words            | "Delete button is displayed on every word rendered on any page                                  | Pass          |
-| 4.1       |                                                | When "Delete" button is clicked a modal appears with all word details                           | Pass          |
-| 4.2       |                                                | Modal asks for confirmation to delete word                                                      | Pass          |
-| 4.3       |                                                | Editor can cancel delete task and return to the dashboard                                       | Pass          |
-| 4.4       |                                                | Editor deletes a word and is informed that the word was deleted                                 | Pass          |
+| 4.1       | (subtest)                                      | When "Delete" button is clicked a modal appears with all word details                           | Pass          |
+| 4.2       | (subtest)                                      | Modal asks for confirmation to delete word                                                      | Pass          |
+| 4.3       | (subtest)                                      | Editor can cancel delete task and return to the dashboard                                       | Pass          |
+| 4.4       | (subtest)                                      | Editor deletes a word and is informed that the word was deleted                                 | Pass          |
 
 
 
@@ -87,8 +87,8 @@
 | Test Case | User Story                                                    | Expected Result                                                                                                               | Actual Result |
 |-----------|---------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|---------------|
 | 1.0       | As an administrator I want to change user types for all users | When administrator logs in to their dashboard they can see "Change User Type" button                                          | Pass          |
-| 1.1       |                                                               | Clicking "Change User Type" button navigates to admin panel                                                                   | Pass          |
-| 1.2       |                                                               | Dropdown menu on admin panel shows the names and user type of all registered users                                            | Pass          |
-| 1.3       |                                                               | Admin can select user and assign a new user type                                                                              | Pass          |
-| 1.4       |                                                               | If admin assigns a user type which is the current user type for the user, admin is infomed the user is already that user type | Pass          |
+| 1.1       | (subtest)                                                     | Clicking "Change User Type" button navigates to admin panel                                                                   | Pass          |
+| 1.2       | (subtest)                                                     | Dropdown menu on admin panel shows the names and user type of all registered users                                            | Pass          |
+| 1.3       | (subtest)                                                     | Admin can select user and assign a new user type                                                                              | Pass          |
+| 1.4       | (subtest)                                                     | If admin assigns a user type which is the current user type for the user, admin is infomed the user is already that user type | Pass          |
 | 2.0       | As an admin I don't want to edit my user type by mistake      | If admin tries to change their own user type, they are informed they cannot change their own type                             | Pass          |
