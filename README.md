@@ -312,7 +312,8 @@ The testing methodology for this project was to walk through all of the user sto
 The site was tested for responsivness by testing in Chrome Dev Tools and also on multiple phisical devices. Finally, the routing and security of the site was tested by manipulating the URL to try and access areas of the website without permission. All tests were completed successfully with no issues. 
 
 ### User Story Testing
-
+Due to table better table formatting - user story testing is available at the link below:
+[User Story Testing](TESTING.md)
 #### Visitor story testing
 
 
