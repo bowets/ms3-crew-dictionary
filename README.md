@@ -17,7 +17,12 @@ The Cruise Ship Crew Dictionary is a simple dictionary designed in a minimalist 
 
 ## User Stories
 
-**User stories from a perspective of a visitor**
+<details>
+<summary>**User stories from a perspective of a visitor**</summary>
+<br>
+1. As a visitor I want to easily view the dictionary
+ - 
+</details>
 - As a user I want to find out the meaning of a word
   - The dictionary focuses on words and their definitions on the main page. Users can visit the dictionary and find the word and definition. 
 
