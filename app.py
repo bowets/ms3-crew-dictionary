@@ -483,6 +483,5 @@ def is_object_id_valid(id_value):
 if __name__ == "__main__":
     app.run(
         host=os.environ.get("IP"),
-        debug=False,
         port=int(os.environ.get("PORT"))
     )
