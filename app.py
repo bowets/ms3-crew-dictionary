@@ -183,7 +183,7 @@ def login():
     # check if another user is already logged in
     if is_authenticated():
         flash("You must log out first before logging back in")
-        return redirect(url_for("login"))
+        return redirect(url_for("dashboard"))
 
     # if no users logged in, log in user
     if request.method == "POST":
