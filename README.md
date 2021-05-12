@@ -360,9 +360,6 @@ This site is deployed on [Heroku](https://www.heroku.com/home). Heroku is a free
 
 ## Github
 1. Navigate to the repository for this project [ms3-crew-dictionary](https://github.com/bowets/ms3-crew-dictionary) and click on the green button to open the menu
-<br>
-![Github](readme_img/deploy_1_github_code.jpg)
-
 
 2. You can either download the zip file and extract it into your local directory or copy the link to the repository and clone it in the command line
 
@@ -374,30 +371,20 @@ This site is deployed on [Heroku](https://www.heroku.com/home). Heroku is a free
 
 
 5. when in the Heroku dashboard, click on the "New" button and then select "Create new app"
-<br>![Heroku New](readme_img/deploy_2_heroku_new.jpg)
-
 
 6. On the next screen enter an app name (must be unique) and select the region closest to you. 
-<br>![New Heroku App](readme_img/deploy_3_heroku_appname.jpg)
-
 
 7. In the deploy section, click on "Connect to GitHub"
-<br> ![DeployGithub](readme_img/deploy_4_heroku_deploygithub.jpg)
-
 
 8. Select your github user account and search for the repository that you want to deploy.
 
-
 9. If you want, you can enable Automatic Deployment. This will build your application each time you push any changes to GitHub.
-<br> ![AutoDeploy](readme_img/deploy_5_heroku_autodeploy.jpg)
-
 
 10. Navigate to settings and select "Reveal Config Vars. Here you will enter the configuration keys and values from your env.py file. They should look similar to this:
 - IP: ```0.0.0.0```
 - PORT: ```5000```
 - MONGO_URI: ```mongodb://<dbuser>:<dbpassword>@ds225442.mlab.com:25442/<dbname>```
 - SECRET_KEY: [any string of characters. the longer the better]
-<br> ![Config Vars](readme_img/deploy_6_heroku_configvars.jpg)
 
 
 11. Now go back to the "Deploy" tab and click on "Deploy Branch"
