@@ -112,16 +112,14 @@ There are four types of users that this website is designed for:
 A visitor is anyone who navigates to this website and can see the dictionary. Visitors can view words and definition, the about page and they can register for an account. 
 The page is fully functional for read only access for visitors. 
 ## User
-A visitor who registeres for an account 
-
+A visitor who registeres for an account automatically becomes a "user". Users have the same rights as visitors, plus they have access to a dashboard and to submit words to the dictionary. 
+Any word a user submits is first sent to an editor to check and approve. Once approved, the word is published to the dictionary. 
 ## Editor
-
-
+Editors have all the rights of a user, but also have the responsibility to check and approve user submitted words. Editors can also edit and delete words from the dictionary.
 ## Admin
-
-
+Administrators have all the rights of an editor, but they also have the right to change user types for all users between user / editor / admin. They can change any user except themselves. This is a security feature so that an administrator doesn't accidentaly change their own permissions. 
 # CRUD - Create, Read, Update and Delete
-
+As part of the milestone project, we have to demonstrate that our application can perform CRUD operations. The 
 ## Create
 
 ## Read

@@ -347,6 +347,19 @@ def delete_word(word_id):
         return redirect(url_for("dictionary"))
 
 
+@app.route("/reject_word/<word_id>")
+def reject_word(word_id):
+    if is_editor_or_admin():
+        if not is_object_id_valid(word_id):
+            abort(404)
+        mongo.db.words.remove({"_id": ObjectId(word_id)})
+        flash("Word successfully rejected")
+        return redirect(url_for("dashboard"))
+    else:
+        flash("You do not have permission to exectute that operation")
+        return redirect(url_for("dictionary"))
+
+
 @app.route("/change_pwd", methods=["GET", "POST"])
 def change_pwd():
     if request.method == "POST":
