@@ -230,6 +230,45 @@ Editors and administrators have the ability to reject words submitted by other u
 ### Delete word
 Editors and administrators have the ability to delete words which have been submitted and approved. This is in case a word is approved accidentally so that it can be deleted from the dictionary. The application removes the word from the collection. 
 
+# Mongo DB Databse Structure
+The database used for this project is MongoDB. The main database contains three collections. 
+- Categories 
+- Users
+- Words
+
+### Categories
+This collection contains the word categories. Each word can be either a noun, verb or adjective. These categories are pulled into the forms to submit or edit words. 
+
+```
+_id: ObjectID
+category_name: String
+```
+
+### Users
+The users collection stores all the data about registered users. The strucutre of the users collection is: 
+
+```
+_id: ObjectID
+user_name: String
+user_password: String 
+user_type: String
+```
+The user_password string is hashed using the Werkzeug password hash function
+
+### Words
+The words collection stores all the words, definitions, uses and other processing information. The structure of the collection is:
+
+```
+_id: ObjectID
+word: String
+word_category: String
+word_definition: String
+word_sentence: String
+word_submitted_by: String
+word_approved_by: String
+word_status: String
+word_submitted_datetime: Date
+```
 
 # Technologies Used
 
@@ -317,14 +356,39 @@ Due to table better table formatting - user story testing is available at the li
 
 
 # Deployment
+This site is deployed on [Heroku](https://www.heroku.com/home). Heroku is a free online hosting service for applications using multiple languages including Python. For this reason, it was chosen to host this project. To deploy this app on Heroku please follow the steps outlined below:
 
+## Github
+1. Navigate to the repository for this project [ms3-crew-dictionary](https://github.com/bowets/ms3-crew-dictionary) and click on the green button to open the menu
+<br>
+![Github](readme_img/deploy_1_github_code.jpg)
 
+2. You can either download the zip file and extract it into your local directory or copy the link to the repository and clone it in the command line
+3. Create a new repository in Github and push this project into the new repository.
+4. Log in to [Heroku](https://www.heroku.com/home) if you have an account or if you do not have an account, create a new account.
+5. when in the Heroku dashboard, click on the "New" button and then select "Create new app"
+<br>![Heroku New](readme_img/deploy_2_heroku_new.jpg)
 
-## Heroku
+6. On the next screen enter an app name (must be unique) and select the region closest to you. 
+<br>![New Heroku App](readme_img/deploy_3_heroku_appname.jpg)
 
-## Local Deployment
+7. In the deploy section, click on "Connect to GitHub"
+<br> ![DeployGithub](readme_img/deploy_4_heroku_deploygithub.jpg)
 
+8. Select your github user account and search for the repository that you want to deploy.
+9. If you want, you can enable Automatic Deployment. This will build your application each time you push any changes to GitHub.
+<br> ![AutoDeploy](readme_img/deploy_5_heroku_autodeploy.jpg)
 
+10. Navigate to settings and select "Reveal Config Vars. Here you will enter the configuration keys and values from your env.py file. They should look similar to this:
+- IP: ```0.0.0.0```
+- PORT: ```5000```
+- MONGO_URI: ```mongodb://<dbuser>:<dbpassword>@ds225442.mlab.com:25442/<dbname>```
+- SECRET_KEY: [any string of characters. the longer the better]
+<br> ![Config Vars](readme_img/deploy_6_heroku_configvars.jpg)
+
+11. Now go back to the "Deploy" tab and click on "Deploy Branch"
+
+12. The website should be deployed on ```https://[your_app_name].herokuapp.com/```
 # Credits
 ## Media
 
