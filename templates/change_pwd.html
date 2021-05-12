@@ -13,13 +13,13 @@ Cruise Ship Crew Dictionary - {{username}} dashboard
       <!-- Change password form -->
       <form method="POST" action="{{url_for('change_pwd')}}">
         <div class="form-group">
-          <label for="old_pwd">Old Password</label>
+          <label for="old_pwd">Current Password</label>
           <input type="password" name="old_pwd" class="form-control" id="old_pwd">
 
-          <label for="regpassword">Password</label>
+          <label for="regpassword">New Password</label>
           <input type="password" name="regpassword" class="form-control" id="regpassword" onChange="checkPassword()"
             minlength="5" required>
-          <label class="mt-3" for="cregpassword">Confirm Password</label>
+          <label class="mt-3" for="cregpassword">Confirm New Password</label>
           <input type="password" class="form-control" id="cregpassword" onChange="checkPassword()" minlength="5"
             required>
         </div>
