@@ -417,7 +417,7 @@ def admin_panel():
         flash("You do not have permission to enter this area. Please log in.")
         return redirect(url_for("login"))
 
-    users = mongo.db.users.find()
+    users = mongo.db.users.find().sort([("user_type", pymongo.DESCENDING), ("user_name", pymongo.ASCENDING)])
 
     if request.method == "POST":
         user_type_change = {
