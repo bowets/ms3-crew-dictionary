@@ -38,7 +38,7 @@ The footer also includes the mission statement for the dictionary. The footer is
 <details>
 <summary><strong>User stories from a perspective of a user</strong></summary>
 <br>
-<h3>Registerd users have all the rights and permissions of visitors<h3>
+<h3>Registerd users have all the rights and permissions of visitors</h3>
 <ol>
 <li>As a user I want to log in</li>
 <p>The log in page is accessible by following the link to the login page in the navigation bar in the top right.</p>
@@ -58,7 +58,7 @@ The footer also includes the mission statement for the dictionary. The footer is
 <details>
 <summary><strong>User stories from a perspective of an editor</strong></summary>
 <br>
-<h3>Editors have all the rights and permissions of registered users<h3>
+<h3>Editors have all the rights and permissions of registered users</h3>
 <ol>
 <li>As an editor I want to approve words submitted by users</li>
 <p>When any logged in user submits a word, it must fist be approved by an editor before it is published to the main dictionary. The editor can approve words in the editor dashboard.</p>
@@ -74,7 +74,7 @@ The footer also includes the mission statement for the dictionary. The footer is
 <details>
 <summary><strong>User stories from a perspective of an administrator</strong></summary>
 <br>
-<h3>Administrators have all the rights and permissions of editors<h3>
+<h3>Administrators have all the rights and permissions of editors</h3>
 <ol>
 <li>As an administrator I want to control user types for all registerd users</li>
 <p>Administrators have the right to change any registerd user between "user", "editor", "admin".</p>
