@@ -13,10 +13,10 @@ Submit a new word to the dictionary
 
  -->
 
-<div class="container">
+
     <div class="row">
         <div class="col">
-            <h1>Edit word</h1>
+            <h1 class="text-center">Edit word</h1>
             <form method="POST" action="{{url_for('edit_word', word_id=word._id)}}">
                 <div class="form-group">
                     <label for="word">New word</label>
@@ -52,6 +52,6 @@ Submit a new word to the dictionary
             </form>
         </div>
     </div>
-</div>
+
 
 {% endblock %}
