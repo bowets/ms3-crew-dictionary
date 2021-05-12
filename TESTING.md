@@ -2,25 +2,25 @@
 
 # Visitor story testing
 
-| Test Case | User Story                                                             | Expected Result                                                                                                    | Actual Result |
-|-----------|------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|---------------|
-| 1.0       | As a visitor I want to easily view the dictionary                      | Visitor enters page URL and the main dictionary page opens                                                         | Pass          |
-| 1.1       | (subtest)                                                              | All words render on the page                                                                                       | Pass          |
-| 1.2       | (subtest)                                                              | All other elements render on the page (navigation bar, footer, serach bar & links)                                 | Pass          |
-| 2.0       | As a visitor I want to search for specific words                       | Search bar is rendered on the page                                                                                 | Pass          |
-| 2.1       | (subtest)                                                              | Visitor can enter text in the serach bar                                                                           | Pass          |
-| 2.2       | (subtest)                                                              | Clicking on the search button initiates serach and results are displayed on page                                   | Pass          |
-| 2.3       | (subtest)                                                              | If no results, visitor is informed that the search returned no results                                             | Pass          |
-| 3.0       | As a visitor I want to find out more information about this dictionary | Visitor clicks on "About" link and is taken to the about page                                                      | Pass          |
-| 4.0       | As a visitor I want to register for an account                         | Visitor clicks on the register link and is taken to the register page                                              | Pass          |
-| 4.1       | (subtest)                                                              | Visitor can enter information in the imput fields                                                                  | Pass          |
-| 4.2       | (subtest)                                                              | Form validation requires the visitor to enter username of minimum 5 characters                                     | Pass          |
-| 4.3       | (subtest)                                                              | Form validation checks that the password was entered correctly twice                                               | Pass          |
-| 4.4       | (subtest)                                                              | If registration successful, visitor is informed they are now registered                                            | Pass          |
-| 4.5       | (subtest)                                                              | If the username is already taken, visitor is asked to choose another username and redirected back to register page | Pass          |
-| 5.0       | As a visitor I want to easily navigate the page                        | Pagination is present on the dictionary page                                                                       | Pass          |
-| 5.1       | (subtest)                                                              | Clicking on any page number takes the visitor to that specific page                                                | Pass          |
-| 5.2       | (subtest)                                                              | Clicking on the "Previous" and "Next buttons increments the page by one                                            | Pass          |
+| Test Case | User Story                                            | Expected Result                                                                                                    | Actual Result |
+|-----------|-------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|---------------|
+| 1.0       | As a visitor I want to easily view the dictionary     | Visitor enters page URL and the main dictionary page opens                                                         | Pass          |
+| 1.1       | (subtest)                                             | All words render on the page                                                                                       | Pass          |
+| 1.2       | (subtest)                                             | All other elements render on the page (navigation bar, footer, serach bar & links)                                 | Pass          |
+| 2.0       | As a visitor I want to search for specific words      | Search bar is rendered on the page                                                                                 | Pass          |
+| 2.1       | (subtest)                                             | Visitor can enter text in the serach bar                                                                           | Pass          |
+| 2.2       | (subtest)                                             | Clicking on the search button initiates serach and results are displayed on page                                   | Pass          |
+| 2.3       | (subtest)                                             | If no results, visitor is informed that the search returned no results                                             | Pass          |
+| 3.0       | As a visitor I want to find out about this dictionary | Visitor clicks on "About" link and is taken to the about page                                                      | Pass          |
+| 4.0       | As a visitor I want to register for an account        | Visitor clicks on the register link and is taken to the register page                                              | Pass          |
+| 4.1       | (subtest)                                             | Visitor can enter information in the imput fields                                                                  | Pass          |
+| 4.2       | (subtest)                                             | Form validation requires the visitor to enter username of minimum 5 characters                                     | Pass          |
+| 4.3       | (subtest)                                             | Form validation checks that the password was entered correctly twice                                               | Pass          |
+| 4.4       | (subtest)                                             | If registration successful, visitor is informed they are now registered                                            | Pass          |
+| 4.5       | (subtest)                                             | If the username is already taken, visitor is asked to choose another username and redirected back to register page | Pass          |
+| 5.0       | As a visitor I want to easily navigate the page       | Pagination is present on the dictionary page                                                                       | Pass          |
+| 5.1       | (subtest)                                             | Clicking on any page number takes the visitor to that specific page                                                | Pass          |
+| 5.2       | (subtest)                                             | Clicking on the "Previous" and "Next buttons increments the page by one                                            | Pass          |
 
 
 # Registered User story testing
