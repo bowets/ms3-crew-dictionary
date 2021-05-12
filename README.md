@@ -209,12 +209,30 @@ Editors and administrators have the ability to delete words which have been subm
 * [PEP8 Online](http://pep8online.com/) - Testing that all python code is valid
 * [GTMetrix](https://gtmetrix.com/) - Loading time testing
 
-
-
 # Testing
 
 ## Code Validation
+### W3C Markup Validation Service
+The W3C Markup Validation Service Validates HTML code of the webpage. The main URL and all other page URLs were fed into the validator and returned no issues
+![W3C Markup Validation Service](readme_img/w3chtml_dictionary.jpg)
 
+### W3C CSS Validation Service
+The W3C Css Validation Service validates the CSS code on the website. When the root page of the website was passed through the validation tool, the tool identified 2 errors and 750 warnings. However, all errors and warnings were related to the Bootstrap library as seen in the screenshot below. 
+![W3C CSS Validation](readme_img/w3chcss_dictionary.jpg)
+
+### JSHint
+The JavaScript code used for form validation on the Register page and Change Password page was fed to the JSHint validator. There were no errors with the code, however, the tool identified that the function checkPassword() is not called in the script. However, it is called in the input field of the register and change password forms. 
+![JSHint](readme_img/jshint_js.jpg)
+
+
+### PEP8 Online
+The PEP8 online checks the validity of the python code in the app. The validation tool found no issues with the code.
+![PEP8](readme_img/pep8validation.jpg)
+
+### GTMetrix
+GTMetrix evaluates the load time for the website and overall efficiency. The tool rates this website with an A for optimisation. 
+Initially the rating was a B and the suggestion was to remove the bootstrap library from the local directory and use CDN instead. This dramatically decreased the load time for the website. 
+![GTMetrix](readme_img/gtmetrixvalidation.jpg)
 ## Manual Testing
 
 
@@ -228,7 +246,6 @@ Editors and administrators have the ability to delete words which have been subm
 
 
 # Credits
-
 ## Media
 
 * [TopPNG](https://toppng.com/cruise-ship-clip-art-cruise-ship-encode-clipart-to-cruise-ship-clipart-black-and-white-PNG-free-PNG-Images_164796) - Favicon and Navbar brand image
@@ -248,6 +265,7 @@ Code snippets implemented in this project are credited below and in the file com
 * [Flask Error Handling](https://www.askpython.com/python-modules/flask/flask-error-handling) - Tutorial for Flask error handling
 * [Pagination](https://github.com/mirofrankovic/cookbook-trisport-project-03/blob/master/app.py#L26-L103) - Taken from project "cookbook-trisport-project-03" by mirofrankovic and modiffied to suit this project
 * [Check if authenticated user](https://github.com/NgiapPuoyKoh/ai-chat-annotator/blob/7b37842579f8d1783de8d11be544f9790b248f05/app.py#L534) - Taken from project ai-chat-annotator by NgiapPuoyKoh
+* [Password validation](https://stackoverflow.com/questions/21727317/how-to-check-confirm-password-field-in-form-without-reloading-page/21727518) - Taken from StackOverflow
 
 
 ## Acknowledgements
