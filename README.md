@@ -18,25 +18,72 @@ The Cruise Ship Crew Dictionary is a simple dictionary designed in a minimalist 
 ## User Stories
 
 <details>
-<summary>**User stories from a perspective of a visitor**</summary>
+<summary><strong>User stories from a perspective of a visitor</strong></summary>
 <br>
-1. As a visitor I want to easily view the dictionary
- - 
+<ol>
+<li>As a visitor I want to easily view the dictionary</li>
+<p>The dictionary is the first page when a visitor navigates to the website and is fully accessible to all visitors.</p>
+<li>As a visitor I want to search for specific words</li>
+<p>A search bar is available on the main dictionary page to search all words and definitions.</p>
+<li>As a visitor I want to find out more information about this dictionary</li>
+<p>An about page is available in the navigation bar which gives additional information about the dictionary. 
+The footer also includes the mission statement for the dictionary. The footer is at the bottom of every page.</p>
+<li>As a visitor I want to register for an account</li>
+<p>The register page allows any visitor to register for an account</p>
+<li>As a visitor I want to easily navigate the page</li>
+<p>The main dictionary page is paginated with 5 word cards on each page. This makes navigation easy and prevents the user from having to scroll through the whole list of words.</p>
+</ol>
 </details>
-- As a user I want to find out the meaning of a word
-  - The dictionary focuses on words and their definitions on the main page. Users can visit the dictionary and find the word and definition. 
+<br>
+<details>
+<summary><strong>User stories from a perspective of a user</strong></summary>
+<br>
+<h3>Registerd users have all the rights and permissions of visitors<h3>
+<ol>
+<li>As a user I want to log in</li>
+<p>The log in page is accessible by following the link to the login page in the navigation bar in the top right.</p>
+<li>As a user I want to submit a new word</li>
+<p>When a user logs in they are directed to their user dashboard with a button to submit a new word. This option is also available in the "User Tools" dropdown menu</p>
+<li>As a user I want to see the status of my submissions</li>
+<p>After submitting a word, the user is redirected back to their dashboard where they can see all of their submitted words categorised into either "approved" or "pending approval".</p>
+<li>As a user I want to edit words</li>
+<p>From the user dashboard, users are able to edit words which are pending approval.</p>
+<li>As a user I want to log out</li>
+<p>The user can log out of their account by going to the "Log out" link in the "User Tools" dropdown menu on the navigation bar.</p>
+<li>As a user I want to change my password</li>
+<p>The user can change their password by going to the "Change Password" link in the "User Tools" dropdown menu on the navigation bar.</p>
+</ol>
+</details>
+<br>
+<details>
+<summary><strong>User stories from a perspective of an editor</strong></summary>
+<br>
+<h3>Editors have all the rights and permissions of registered users<h3>
+<ol>
+<li>As an editor I want to approve words submitted by users</li>
+<p>When any logged in user submits a word, it must fist be approved by an editor before it is published to the main dictionary. The editor can approve words in the editor dashboard.</p>
+<li>As an editor I want to reject a submitted word.</li>
+<p>On the editor dashboard, editors can reject a submitted word by clicking on the "Reject" button if the word is not relevant to the dictionary.</p>
+<li>As an editor I want to edit words</li>
+<p>Editors can edit words before they are approved in the editor dashboard. Editors can also edit any word in the main dictionary by clicking "Edit" next to the word in the main dictionary or serach page</p>
+<li>As an editor I want to delete words</li>
+<p>If an editor thinks a word is no longer relevant, they can delete that word from the dictionary by either navigating to it in the main dictionary or by searching for the word and deleting it in the search page.</p>
+</ol>
+</details>
+<br>
+<details>
+<summary><strong>User stories from a perspective of an administrator</strong></summary>
+<br>
+<h3>Administrators have all the rights and permissions of editors<h3>
+<ol>
+<li>As an administrator I want to control user types for all registerd users</li>
+<p>Administrators have the right to change any registerd user between "user", "editor", "admin".</p>
+<li>As an admin I don't want to edit my user type by mistake</li>
+<p>An administrator cannot change their own user type.</p>
+</ol>
+</details>
+<br>
 
-- As a user I want to quickly search for a word
-  - The dictionary has a built in search function where users can search for specific words or terms in definitions.
-
-- As a user I want to contribute to the dictionary
-  - Users can register for an account and add words and definitions
-
-- As a user I want to edit words already submitted
-  - Users do not have the right to edit words, however, users can be made into editors by the administrator and then have the ability to edit
-
-- As an editor I want to control what users submit
-  - Any submitted word must be approved by an editor or administrator before it is published in the dictionary. 
 
 ## Wireframes
 The wireframes were created at the beginning and throughout the project to aid with the front end design. Below are links to the original designs for both desktop and mobile. 
