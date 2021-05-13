@@ -515,7 +515,8 @@ Code snippets implemented in this project are credited below and in the file com
 * [Footer Sticks to bottom of the page](https://stackoverflow.com/questions/40853952/bootstrap-footer-at-the-bottom-of-the-page/60780493#60780493) - Credit to Robert Beckson
 * [Flask Error Handling](https://www.askpython.com/python-modules/flask/flask-error-handling) - Tutorial for Flask error handling
 * [Pagination](https://github.com/mirofrankovic/cookbook-trisport-project-03/blob/master/app.py#L26-L103) - Taken from project "cookbook-trisport-project-03" by mirofrankovic and modiffied to suit this project
-* [Check if authenticated user](https://github.com/NgiapPuoyKoh/ai-chat-annotator/blob/7b37842579f8d1783de8d11be544f9790b248f05/app.py#L534) - Taken from project ai-chat-annotator by NgiapPuoyKoh
+* [Check if authenticated user](https://github.com/NgiapPuoyKoh/ai-chat-annotator/blob/7b37842579f8d1783de8d11be544f9790b248f05/app.py#L534) - Helper function taken from project ai-chat-annotator by NgiapPuoyKoh
+* [Is object ID valid](https://github.com/NgiapPuoyKoh/ai-chat-annotator/blob/7b37842579f8d1783de8d11be544f9790b248f05/app.py#L528) - Helper function taken from project ai-chat-annotator by NgiapPuoyKoh
 * [Password validation](https://stackoverflow.com/questions/21727317/how-to-check-confirm-password-field-in-form-without-reloading-page/21727518) - Taken from StackOverflow
 
 

@@ -503,6 +503,9 @@ def is_admin():
         {"user_name": session['user']})['user_type']
     return True if user_type == "admin" else False
 
+# Code taken from previous student project "ai-chat-annotator"
+# by "NgiapPuoyKoh" from
+# https://github.com/NgiapPuoyKoh/ai-chat-annotator/blob/7b37842579f8d1783de8d11be544f9790b248f05/app.py
 
 def is_object_id_valid(id_value):
     """ Validate is the id_value is a valid ObjectId
