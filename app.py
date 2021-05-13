@@ -333,7 +333,7 @@ def edit_word(word_id):
             flash(
                 "Word successfully updated. The word is in the pending queue \
                     and will be reviewed by one of the editors.")
-            return redirect(url_for("dashboard", username=session["user"]))
+            return redirect(url_for("dashboard"))
         if is_object_id_valid(word_id):
             word = mongo.db.words.find_one_or_404({"_id": ObjectId(word_id)})
             categories = mongo.db.category.find()
@@ -358,7 +358,7 @@ def approve(word_id):
             {"$set": {"word_approved_by": session["user"],
              "word_status": "approved"}})
         flash("Approved")
-        return redirect(url_for("dashboard", username=session["user"]))
+        return redirect(url_for("dashboard"))
     else:
         flash("You do not have permission to exectute that operation")
         return redirect(url_for("dictionary"))
@@ -402,7 +402,7 @@ def change_pwd():
                 {"$set": {"user_password": generate_password_hash(
                     request.form.get("regpassword"))}})
             flash("Password Successfully updated")
-            return redirect(url_for("dashboard", username=session["user"]))
+            return redirect(url_for("dashboard"))
         else:
             flash("Old Password is incorrect, please try again")
             return redirect(url_for("change_pwd"))
