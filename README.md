@@ -315,8 +315,9 @@ The W3C Markup Validation Service Validates HTML code of the webpage. The main U
 ![W3C Markup Validation Service](readme_img/w3chtml_dictionary.jpg)
 
 ### W3C CSS Validation Service
-The W3C Css Validation Service validates the CSS code on the website. When the root page of the website was passed through the validation tool, the tool identified 2 errors and 750 warnings. However, all errors and warnings were related to the Bootstrap library as seen in the screenshot below. 
+The W3C Css Validation Service validates the CSS code on the website. The custom CSS code passed through with no errors. However, when the root page of the website was passed through the validation tool, the tool identified 2 errors and 750 warnings. However, all errors and warnings were related to the Bootstrap library as seen in the screenshot below. The screenshot following the errors is the custom CSS validation.
 ![W3C CSS Validation](readme_img/w3chcss_dictionary.jpg)
+![W3C CSS custom CSS Validation](readme_img/w3chcss_dictionary2.jpg)
 
 ### JSHint
 The JavaScript code used for form validation on the Register page and Change Password page was fed to the JSHint validator. There were no errors with the code, however, the tool identified that the function checkPassword() is not called in the script. However, it is called in the input field of the register and change password forms. 
