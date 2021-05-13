@@ -357,7 +357,7 @@ Due to table better table formatting - user story testing is available at the li
 
 # Deployment
 This site is deployed on [Heroku](https://www.heroku.com/home). Heroku is a free online hosting service for applications using multiple languages including Python. For this reason, it was chosen to host this project. To deploy this app on Heroku please follow the steps outlined below:
-
+## Heroku
 1. Navigate to the repository for this project [ms3-crew-dictionary](https://github.com/bowets/ms3-crew-dictionary) and click on the green button to open the menu
 
 2. You can either download the zip file and extract it into your local directory or copy the link to the repository and clone it in the command line
@@ -388,8 +388,30 @@ This site is deployed on [Heroku](https://www.heroku.com/home). Heroku is a free
 
 11. Now go back to the "Deploy" tab and click on "Deploy Branch"
 
-
 12. The website should be deployed on ```https://[your_app_name].herokuapp.com/```
+
+## Local Deployment
+1. Create a development project folder and navigate to it
+``` cd /[folder path]```
+2. Initialise Git
+``` git init```
+3. Clone the project repository into your local development folder
+``` git clone https://github.com/bowets/ms3-crew-dictionary.git```
+2. Install Python 3
+3. Install Pip
+4. Create a virtual environment for your local project
+5. Install Flask
+6. Install PyMongo
+7. Install the packages in the requirements.txt file
+8. Create an env.py file with the following parameters:
+- IP: ```0.0.0.0```
+- PORT: ```5000```
+- MONGO_URI: ```mongodb://<dbuser>:<dbpassword>@ds225442.mlab.com:25442/<dbname>```
+- SECRET_KEY: [any string of characters. the longer the better]
+
+The project already contains a ```.gitignore``` file which contains env.py
+9. Run the project ```python app.py```
+
 # Credits
 ## Media
 
