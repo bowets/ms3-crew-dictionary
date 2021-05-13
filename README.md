@@ -382,6 +382,7 @@ This site is deployed on [Heroku](https://www.heroku.com/home). Heroku is a free
 10. Navigate to settings and select "Reveal Config Vars. Here you will enter the configuration keys and values from your env.py file. They should look similar to this:
 - IP: ```0.0.0.0```
 - PORT: ```5000```
+- MONGO_DBNAME: [name of your database]
 - MONGO_URI: ```mongodb://<dbuser>:<dbpassword>@ds225442.mlab.com:25442/<dbname>```
 - SECRET_KEY: [any string of characters. the longer the better]
 
@@ -406,6 +407,7 @@ This site is deployed on [Heroku](https://www.heroku.com/home). Heroku is a free
 8. Create an env.py file with the following parameters:
 - IP: ```0.0.0.0```
 - PORT: ```5000```
+- MONGO_DBNAME: [name of your database]
 - MONGO_URI: ```mongodb://<dbuser>:<dbpassword>@ds225442.mlab.com:25442/<dbname>```
 - SECRET_KEY: [any string of characters. the longer the better]
 
