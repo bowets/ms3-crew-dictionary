@@ -372,6 +372,8 @@ word_submitted_datetime: Date
 * [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/) - Web browser used for testing
 * [Markdown Table Generator](https://www.tablesgenerator.com/markdown_tables) - Used to design the tables used in this readme file
 * [Balsamiq](https://balsamiq.com/wireframes/?gclid=CjwKCAjw-e2EBhAhEiwAJI5jg_33A7TEqNM59vO9PjRpE-ZjzkpAgjcfU7TXsKZhu4a3puGdzFaM3hoCqIUQAvD_BwE) - Wireframe creation tool. Used to design initial templates for the website pages
+* [Table of Contents Generator](http://ecotrust-canada.github.io/markdown-toc/) - Generated table of contents for this readme file
+* [Excel to Markdown Table Generator](https://thisdavej.com/copy-table-in-excel-and-paste-as-a-markdown-table/) - Used to generate testing tables from Excel into Markdown for the [User Story Testing](TESTING.md) file
 
 ## Testing
 * [Am I Responsive](http://ami.responsivedesign.is/) - Testing responsive design
